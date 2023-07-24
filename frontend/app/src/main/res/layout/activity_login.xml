@@ -80,7 +80,7 @@
             <Button
                 android:id="@+id/btnLogin"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="279dp"
                 android:layout_weight="1"
                 android:backgroundTint="#0D4A06"
                 android:text="Connexion" />
