@@ -17,7 +17,6 @@ async function HomeUser(clientConnex, req, res) {
     }
 }
 
-
 async function LoginUser(clientConnex, res, req) {
     await clientConnex.db("WM").collection('User').findOne({ logname: req.body.logName })
         .then(resultat => {
