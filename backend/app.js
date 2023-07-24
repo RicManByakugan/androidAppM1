@@ -22,7 +22,7 @@ async function start(port, routeUser) {
     app.use(cookieParser())
 
     // --------------------------------------------------------------------------------
-    // ALL ADMIN MUST LOG IN TO CONTINUE
+    // USER
     // --------------------------------------------------------------------------------
 
     // GET REQUEST
