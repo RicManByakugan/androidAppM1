@@ -13,13 +13,20 @@ async function start(port, routeUser) {
 
     app.use(express.urlencoded({ extended: true }))
     app.use(express.json())
-    // app.use(session({
-    //     secret: "garagesecreti",
-    //     saveUninitialized: true,
-    //     cookie: { maxAge: 1000 * 60 * 60 * 24 },
-    //     resave: false
-    // }))
+    app.use(session({
+        secret: "wmsecretapi",
+        saveUninitialized: true,
+        cookie: { maxAge: 1000 * 60 * 60 * 24 },
+        resave: false
+    }))
     app.use(cookieParser())
+
+    app.use(function (req, res, next) {
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+        res.setHeader('Access-Control-Allow-Credentials', true);
+        next()
+    });
 
     // --------------------------------------------------------------------------------
     // USER
@@ -30,13 +37,32 @@ async function start(port, routeUser) {
     // --------------------------------------------------------------------------------
 
 
+    // POST REQUEST
+    // API CLIENT FOR SUBSCRIBING
+    // REQUIRED INFORMATION : name, firstname, logname, password
+    app.post("/user/subscribe", routeUser.subscribe)
+    // --------------------------------------------------------------------------------
+
+    // POST REQUEST
+    // USER LOGIN
+    // REQUIRED INFORMATION : logName, password
+    app.post("/user/login", routeUser.login)
+    // --------------------------------------------------------------------------------
+
+    // POST REQUEST
+    // USER LOGOUT
+    // REQUIRED INFORMATION : NOTHING ON POST REQUEST
+    app.post("/user/logout", routeUser.logout)
+    // --------------------------------------------------------------------------------
+
+
     // 404 ERROR
     app.use((req, res) => {
         res.send({ message: "NOT FOUND" })
     })
     // --------------------------------------------------------------------------------
 
-    app.listen(port, console.log(`Server running on port ${port}`))
+    app.listen(port, console.log(`SERVER RUNNING ON PORT ${port}`))
 }
 
 exports.start = start

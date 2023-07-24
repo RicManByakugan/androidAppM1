@@ -1,4 +1,4 @@
-const controllerClient = require('../controller/user/controller.user')
+const controllerUser = require('../controller/user/controller.user')
 var connexion
 
 function sendDb(clientMongo) {
@@ -8,7 +8,7 @@ function sendDb(clientMongo) {
 async function home(req, res) {
     try {
         await connexion.connect();
-        await controllerClient.HomeUser(connexion, req, res)
+        await controllerUser.HomeUser(connexion, req, res)
     } catch (e) {
         console.log(e);
     } finally {
@@ -16,5 +16,34 @@ async function home(req, res) {
     }
 }
 
+async function login(req, res) {
+    try {
+        await connexion.connect();
+        await controllerUser.LoginUser(connexion, res, req, false)
+    } catch (e) {
+        console.log(e);
+    } finally {
+        await connexion.close();
+    }
+}
+
+async function subscribe(req, res) {
+    try {
+        await connexion.connect();
+        await controllerUser.SubScribeUser(connexion, res, req)
+    } catch (e) {
+        console.log(e);
+    } finally {
+        await connexion.close();
+    }
+}
+
+function logout(req, res) {
+    controllerUser.LogoutUser(res, req)
+}
+
 exports.home = home
+exports.subscribe = subscribe
+exports.login = login
+exports.logout = logout
 exports.sendDb = sendDb
