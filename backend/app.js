@@ -5,11 +5,12 @@ const { MongoClient, ServerApiVersion } = require('mongodb');
 
 const app = express()
 
-async function start(port, routeUser) {
+async function start(port, routeUser, routePost) {
     const uriBd = "mongodb://127.0.0.1:27017";
     // const uriBd = "mongodb+srv://RicMongo:tNhwIIgEIAksjl4H@cluster0.pexx4dr.mongodb.net/?retryWrites=true&w=majority";
     const client = new MongoClient(uriBd, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
     routeUser.sendDb(client)
+    routePost.sendDb(client)
 
     app.use(express.urlencoded({ extended: true }))
     app.use(express.json())
@@ -36,7 +37,6 @@ async function start(port, routeUser) {
     app.get("/user/", routeUser.home)
     // --------------------------------------------------------------------------------
 
-
     // POST REQUEST
     // API CLIENT FOR SUBSCRIBING
     // REQUIRED INFORMATION : name, firstname, logname, password
@@ -53,6 +53,17 @@ async function start(port, routeUser) {
     // USER LOGOUT
     // REQUIRED INFORMATION : NOTHING ON POST REQUEST
     app.post("/user/logout", routeUser.logout)
+    // --------------------------------------------------------------------------------
+
+
+
+
+    // --------------------------------------------------------------------------------
+    // POST
+    // --------------------------------------------------------------------------------
+    // POST REQUEST
+    // ADD SOME POST
+    app.post("/post/", routePost.addpost)
     // --------------------------------------------------------------------------------
 
 

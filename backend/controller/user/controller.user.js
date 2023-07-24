@@ -17,6 +17,37 @@ async function HomeUser(clientConnex, req, res) {
     }
 }
 
+async function NotificationUser(clientConnex, req, res) {
+    if (this.session) {
+        var continueVar = false
+        var resUserN = {}
+        await clientConnex.db("WM").collection('User').findOne({ _id: new ObjectID(this.session) })
+            .then(resultat => {
+                continueVar = true
+                resUserN = resultat
+            })
+            .catch(err => {
+                res.send([{ message: "REQUEST ERROR" }])
+            })
+        
+        if (continueVar) {
+                await clientConnex.db("WM").collection('Notification').find({ client: resUserN }).toArray()
+                    .then(resNotif => {
+                        if (resNotif) {
+                            res.send(resNotif)
+                        } else {
+                            res.send({ message: "EMPTY" })
+                        }
+                    })
+                    .catch(err => {
+                        res.send({ message: "REQUEST ERROR" })
+                    })
+            }
+    } else {
+        res.send([{ message: "USER NOT CONNECTED" }])
+    }
+}
+
 async function LoginUser(clientConnex, res, req) {
     await clientConnex.db("WM").collection('User').findOne({ logname: req.body.logName })
         .then(resultat => {
@@ -80,6 +111,7 @@ function LogoutUser(res, req) {
     res.send({ message: "LOGOUT SUCCESSFULLY" })
 }
 
+exports.NotificationUser = NotificationUser
 exports.SubScribeUser = SubScribeUser
 exports.LoginUser = LoginUser
 exports.LogoutUser = LogoutUser
