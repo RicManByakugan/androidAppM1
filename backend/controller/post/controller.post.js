@@ -1,4 +1,6 @@
-async function AddPost(clientConnex, res, req) {
+const { ObjectID } = require("bson");
+
+async function AddPost(clientConnex, req, res) {
     await clientConnex.db("WM").collection('Post').insertOne(req.body)
         .then(resultat => {
             res.send({ message: "POST ADD SUCCESSFULLY" })
@@ -7,7 +9,7 @@ async function AddPost(clientConnex, res, req) {
         catch(err => res.send({ message: "POST ADD FAILED", detailled: "INVALID INFORMATION", err: err }))
 }
 
-async function GetAllPost(clientConnex, res, req) {
+async function GetAllPost(clientConnex, req, res) {
     await clientConnex.db("WM").collection('Post').find().toArray()
         .then(resultat => {
             if (resultat) {
@@ -21,18 +23,18 @@ async function GetAllPost(clientConnex, res, req) {
         })
 }
 
-async function GetPostID(clientConnex, res, req) {
-    await clientConnex.db("WM").collection('Post').find({ _id: req.body.postId }).toArray()
-        .then(resNotif => {
-            if (resNotif) {
-                res.send(resNotif)
-            } else {
-                res.send({ message: "EMPTY" })
-            }
-        })
-        .catch(err => {
-            res.send({ message: "REQUEST ERROR" })
-        })
+async function GetPostID(clientConnex, req, res) {
+        await clientConnex.db("WM").collection('Post').findOne({ _id: new ObjectID(req.params.idPost) })
+            .then(resss => {
+                if (resss) {
+                    res.send(resss)
+                } else {
+                    res.send({ message: "EMPTY" })
+                }
+            })
+            .catch(err => {
+                res.send({ message: "REQUEST ERROR" })
+            })
 }
 
 exports.AddPost = AddPost
