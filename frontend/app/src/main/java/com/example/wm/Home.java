@@ -65,7 +65,6 @@ public class Home extends AppCompatActivity {
                 findViewById(R.id.fragmentContainerView).setVisibility(View.GONE);
 
                 // Show the main layout and the Toolbar layout
-                findViewById(R.id.toolbar).setVisibility(View.VISIBLE);
 
                 return true;
             // Add other menu item handling if needed
@@ -82,7 +81,6 @@ public class Home extends AppCompatActivity {
             findViewById(R.id.fragmentContainerView).setVisibility(View.VISIBLE);
 
             // Hide the Toolbar layout
-            findViewById(R.id.toolbar).setVisibility(View.GONE);
 
             // Set the search active flag to false
             isSearchActive = false;
