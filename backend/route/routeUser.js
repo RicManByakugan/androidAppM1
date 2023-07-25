@@ -16,6 +16,39 @@ async function home(req, res) {
     }
 }
 
+async function notification(req, res) {
+    try {
+        await connexion.connect();
+        await controllerUser.NotificationUser(connexion, req, res)
+    } catch (e) {
+        console.log(e);
+    } finally {
+        await connexion.close();
+    }
+}
+
+async function addnotif(req, res) {
+    try {
+        await connexion.connect();
+        await controllerUser.AddNotificationUser(connexion, req, res)
+    } catch (e) {
+        console.log(e);
+    } finally {
+        await connexion.close();
+    }
+}
+
+async function notificationID(req, res) {
+    try {
+        await connexion.connect();
+        await controllerUser.NotificationUserIDWatch(connexion, req, res)
+    } catch (e) {
+        console.log(e);
+    } finally {
+        await connexion.close();
+    }
+}
+
 async function login(req, res) {
     try {
         await connexion.connect();
@@ -43,6 +76,9 @@ function logout(req, res) {
 }
 
 exports.home = home
+exports.addnotif = addnotif
+exports.notification = notification
+exports.notificationID = notificationID
 exports.subscribe = subscribe
 exports.login = login
 exports.logout = logout

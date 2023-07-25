@@ -17,6 +17,59 @@ async function HomeUser(clientConnex, req, res) {
     }
 }
 
+async function NotificationUserIDWatch(clientConnex, req, res) {
+    if (this.session) {
+        var continueVar = false
+        var updateit = false
+        var resUserN = {}
+        var resFinal = {}
+        await clientConnex.db("WM").collection('User').findOne({ _id: new ObjectID(this.session) })
+            .then(resultat => {
+                continueVar = true
+                resUserN = resultat
+            })
+            .catch(err => {
+                res.send([{ message: "REQUEST ERROR" }])
+            })
+        
+        if (continueVar) {
+                await clientConnex.db("WM").collection('Notification').findOne({ _id: new ObjectID(req.params.idNotif) })
+                    .then(resNotif => {
+                        if (resNotif) {
+                            updateit = true
+                            resFinal = resNotif
+                        } else {
+                            res.send({ message: "EMPTY" })
+                        }
+                    })
+                    .catch(err => {
+                        res.send({ message: "REQUEST ERROR" })
+                    })
+        }
+        if (updateit) {
+            updateDoc = {
+                $set: {
+                    viewUser: true,
+                }
+            };
+            options = { upsert: true };
+            await clientConnex.db("WM").collection('Notification').updateOne({ _id: new ObjectID(req.params.idNotif) }, updateDoc, options)
+                .then(resUpdate => {
+                    if (resNotif) {
+                        res.send(resFinal)
+                    } else {
+                        res.send({ message: "EMPTY" })
+                    }
+                })
+                .catch(err => {
+                    res.send({ message: "REQUEST ERROR" })
+                })
+        }
+    } else {
+        res.send([{ message: "USER NOT CONNECTED" }])
+    }
+}
+
 async function NotificationUser(clientConnex, req, res) {
     if (this.session) {
         var continueVar = false
@@ -73,6 +126,21 @@ async function LoginUser(clientConnex, res, req) {
         })
 }
 
+async function AddNotificationUser(clientConnex, res, req) {
+    if (req.body.message !== undefined && req.body.user !== undefined) {
+        req.body.dateNotif = new Date()
+        req.body.viewUser = false
+        await clientConnex.db("WM").collection('Notification').insertOne(req.body)
+            .then(resultat => {
+                res.send({ message: "NOTIFICATION ADD SUCCESSFULLY" })
+            })
+            .catch(err => res.send({ message: "SUBSCRIBE FAILED", detailled: "INVALID INFORMATION", err: err }))
+    } else {
+        res.send({ message: "SUBSCRIBE FAILED", detailled: "INVALID INFORMATION" })
+    }
+}
+
+
 async function SubScribeUser(clientConnex, res, req) {
     if (req.body.name !== undefined && req.body.firstname !== undefined && req.body.logname !== undefined && req.body.password !== undefined) {
         req.body.dateSubscribe = new Date()
@@ -111,7 +179,9 @@ function LogoutUser(res, req) {
     res.send({ message: "LOGOUT SUCCESSFULLY" })
 }
 
+exports.AddNotificationUser = AddNotificationUser
 exports.NotificationUser = NotificationUser
+exports.NotificationUserIDWatch = NotificationUserIDWatch
 exports.SubScribeUser = SubScribeUser
 exports.LoginUser = LoginUser
 exports.LogoutUser = LogoutUser
