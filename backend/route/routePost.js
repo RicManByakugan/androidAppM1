@@ -16,7 +16,31 @@ async function addpost(req, res) {
     }
 }
 
+async function getallpost(req, res) {
+    try {
+        await connexion.connect();
+        await controllerPost.GetAllPost(connexion, req, res)
+    } catch (e) {
+        console.log(e);
+    } finally {
+        await connexion.close();
+    }
+}
+
+async function getpost(req, res) {
+    try {
+        await connexion.connect();
+        await controllerPost.GetPostID(connexion, req, res)
+    } catch (e) {
+        console.log(e);
+    } finally {
+        await connexion.close();
+    }
+}
 
 
+
+exports.getallpost = getallpost
+exports.getpost = getpost
 exports.addpost = addpost
 exports.sendDb = sendDb

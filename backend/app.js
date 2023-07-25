@@ -6,8 +6,8 @@ const { MongoClient, ServerApiVersion } = require('mongodb');
 const app = express()
 
 async function start(port, routeUser, routePost) {
-    const uriBd = "mongodb://127.0.0.1:27017";
-    // const uriBd = "mongodb+srv://RicMongo:tNhwIIgEIAksjl4H@cluster0.pexx4dr.mongodb.net/?retryWrites=true&w=majority";
+    // const uriBd = "mongodb://127.0.0.1:27017";
+    const uriBd = "mongodb+srv://welcomemadagascar:MRkdGrGUsnSX34tQ@cluster0.6shj7xp.mongodb.net/";
     const client = new MongoClient(uriBd, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
     routeUser.sendDb(client)
     routePost.sendDb(client)
@@ -56,6 +56,14 @@ async function start(port, routeUser, routePost) {
     // --------------------------------------------------------------------------------
 
 
+
+    // GET ONE POST
+    app.get("/post/:idPost", routePost.getpost)
+    // --------------------------------------------------------------------------------
+
+    // GET ALL POST
+    app.get("/post/", routePost.getallpost)
+    // --------------------------------------------------------------------------------
 
 
     // --------------------------------------------------------------------------------
