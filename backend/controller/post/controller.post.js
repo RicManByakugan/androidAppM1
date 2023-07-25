@@ -37,6 +37,31 @@ async function GetPostID(clientConnex, req, res) {
             })
 }
 
+
+async function GetSearch(clientConnex, req, res) {
+    if (req.body.cleSearch) {
+        await clientConnex.db("WM").collection('Post').findOne({
+            $or: [
+                { numero: req.body.cleSearch },
+                { modele: req.body.cleSearch },
+                { marque: req.body.cleSearch },
+                { annee: req.body.cleSearch }
+            ]
+        })
+            .then(resss => {
+                if (resss) {
+                    res.send(resss)
+                } else {
+                    res.send({ message: "EMPTY" })
+                }
+            })
+            .catch(err => {
+                res.send({ message: "REQUEST ERROR" })
+            })
+    }
+}
+
 exports.AddPost = AddPost
+exports.GetSearch = GetSearch
 exports.GetAllPost = GetAllPost
 exports.GetPostID = GetPostID

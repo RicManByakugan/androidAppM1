@@ -39,8 +39,21 @@ async function getpost(req, res) {
 }
 
 
+async function getsearch(req, res) {
+    try {
+        await connexion.connect();
+        await controllerPost.GetSearch(connexion, req, res)
+    } catch (e) {
+        console.log(e);
+    } finally {
+        await connexion.close();
+    }
+}
+
+
 
 exports.getallpost = getallpost
 exports.getpost = getpost
+exports.getsearch = getsearch
 exports.addpost = addpost
 exports.sendDb = sendDb
