@@ -3,14 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PreferenceFragment">
+    tools:context=".MessageFragment">
 
     <TextView
         android:id="@+id/textView9"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#9C27B0"
-        android:text="Preference Fragment"
+        android:text="Message Fragment"
         android:textAlignment="center"
         android:textSize="34sp"
         android:textStyle="bold" />

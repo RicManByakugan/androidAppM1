@@ -7,10 +7,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 public class Home extends AppCompatActivity {
     private boolean isSearchActive = false;
+    private boolean isSettingsActive = false;
+    private Class<? extends Fragment> lastFragmentClass = ListFragment.class;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,12 +29,12 @@ public class Home extends AppCompatActivity {
             }
         });
 
-        Button btnPreference=findViewById(R.id.btnPreference);
+        Button btnPreference=findViewById(R.id.btnMessage);
         btnPreference.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FragmentManager fragmentManager= getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.fragmentContainerView, PreferenceFragment.class,null).setReorderingAllowed(true).addToBackStack("name").commit();
+                fragmentManager.beginTransaction().replace(R.id.fragmentContainerView, MessageFragment.class,null).setReorderingAllowed(true).addToBackStack("name").commit();
             }
         });
 
@@ -47,6 +50,21 @@ public class Home extends AppCompatActivity {
 
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
+
+        // Check if the current fragment is the SettingsFragment
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        Fragment currentFragment = fragmentManager.findFragmentById(R.id.fragmentContainerView);
+        boolean isSettingsFragment = currentFragment instanceof SettingsFragment;
+
+        // Hide the settings icon if the current fragment is the SettingsFragment or if the search is active
+        MenuItem settingsItem = menu.findItem(R.id.action_settings);
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        if(isSearchActive||isSettingsActive){
+            settingsItem.setVisible(false);
+            searchItem.setVisible(false);
+        }
+
+
         return true;
     }
 
@@ -60,33 +78,95 @@ public class Home extends AppCompatActivity {
 
                 // Hide the other layouts (btnList, btnPreference, btnNotification, fragmentContainerView)
                 findViewById(R.id.btnList).setVisibility(View.GONE);
-                findViewById(R.id.btnPreference).setVisibility(View.GONE);
+                findViewById(R.id.btnMessage).setVisibility(View.GONE);
                 findViewById(R.id.btnNotification).setVisibility(View.GONE);
                 findViewById(R.id.fragmentContainerView).setVisibility(View.GONE);
+                findViewById(R.id.action_settings).setVisibility(View.GONE);
+                invalidateOptionsMenu();
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                lastFragmentClass = fragmentManager.getFragments().size() > 0
+                        ? fragmentManager.getFragments().get(0).getClass()
+                        : null;
+                return true;
 
                 // Show the main layout and the Toolbar layout
+            case R.id.action_settings:
+                // Handle the settings button click here
+
+                // Replace the fragmentContainerView with the SettingsFragment
+                FragmentManager fragmentManager1 = getSupportFragmentManager();
+                lastFragmentClass = fragmentManager1.getFragments().size() > 0
+                        ? fragmentManager1.getFragments().get(0).getClass()
+                        : null;
+                fragmentManager1.beginTransaction().replace(R.id.fragmentContainerView, new SettingsFragment()).addToBackStack(null).commit();
+                findViewById(R.id.btnList).setVisibility(View.GONE);
+                findViewById(R.id.btnMessage).setVisibility(View.GONE);
+                findViewById(R.id.btnNotification).setVisibility(View.GONE);
+                findViewById(R.id.action_search).setVisibility(View.GONE);
+                isSettingsActive=true;
+                invalidateOptionsMenu();
+                // Set the search active flag to false
 
                 return true;
+
             // Add other menu item handling if needed
         }
         return super.onOptionsItemSelected(item);
     }
     public void onBackPressed() {
         // Check if the search is currently active
+
         if (isSearchActive) {
             // Show the other layouts (btnList, btnPreference, btnNotification, fragmentContainerView)
             findViewById(R.id.btnList).setVisibility(View.VISIBLE);
-            findViewById(R.id.btnPreference).setVisibility(View.VISIBLE);
+            findViewById(R.id.btnMessage).setVisibility(View.VISIBLE);
             findViewById(R.id.btnNotification).setVisibility(View.VISIBLE);
             findViewById(R.id.fragmentContainerView).setVisibility(View.VISIBLE);
 
-            // Hide the Toolbar layout
+            // Show the search icon
+            // Trigger onCreateOptionsMenu to update the toolbar menu
+            invalidateOptionsMenu();
 
             // Set the search active flag to false
             isSearchActive = false;
         } else {
-            // Perform the default back button action
-            super.onBackPressed();
+            // Check if the SettingsFragment is currently displayed
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            findViewById(R.id.btnList).setVisibility(View.VISIBLE);
+            findViewById(R.id.btnMessage).setVisibility(View.VISIBLE);
+            findViewById(R.id.btnNotification).setVisibility(View.VISIBLE);
+            findViewById(R.id.fragmentContainerView).setVisibility(View.VISIBLE);
+            isSettingsActive=false;
+            invalidateOptionsMenu();
+            Fragment currentFragment = fragmentManager.findFragmentById(R.id.fragmentContainerView);
+            if (currentFragment instanceof SettingsFragment) {
+                // If the current fragment is the SettingsFragment, pop it from the back stack
+                fragmentManager.popBackStack();
+                return;
+            }
+
+            // If there are fragments in the back stack, navigate back to the previous fragment
+            if (fragmentManager.getBackStackEntryCount() > 0) {
+                fragmentManager.popBackStack();
+            } else {
+                // If there is no fragment in the back stack, show the last fragment that was visible before entering search mode
+                if (lastFragmentClass != null) {
+                    try {
+                        isSettingsActive=false;
+                        invalidateOptionsMenu();
+                        Fragment fragmentToShow = lastFragmentClass.newInstance();
+                        fragmentManager.beginTransaction().replace(R.id.fragmentContainerView, fragmentToShow).commit();
+                    } catch (IllegalAccessException | InstantiationException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    // If there is no last fragment and search is not active, perform the default back button action
+                    isSettingsActive=false;
+                    isSearchActive = false;
+                    invalidateOptionsMenu();
+                    super.onBackPressed();
+                }
+            }
         }
     }
 

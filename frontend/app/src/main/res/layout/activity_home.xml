@@ -17,13 +17,14 @@
             android:layout_weight="1"
             android:text="@string/button_list"
             style="@style/BorderlessButton" />
+
         <Button
-            android:id="@+id/btnPreference"
+            android:id="@+id/btnMessage"
+            style="@style/BorderlessButton"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/button_preference"
-            style="@style/BorderlessButton" />
+            android:text="@string/button_message" />
 
         <Button
             android:id="@+id/btnNotification"
