@@ -42,7 +42,17 @@ async function start(port, routeUser, routePost) {
     // --------------------------------------------------------------------------------
 
     // GET REQUEST
-    app.get("/user/notification/:idNotif", routeUser.notificationID)
+    app.get("/user/notification", routeUser.notification)
+    // --------------------------------------------------------------------------------
+
+    // GET REQUEST
+    app.get("/user/preference", routeUser.preference)
+    // --------------------------------------------------------------------------------
+
+    // POST REQUEST
+    // API ADD NOTIFICATION FOR USER
+    // REQUIRED INFORMATION : userId, preference
+    app.post("/user/preference/add", routeUser.addpreference)
     // --------------------------------------------------------------------------------
 
     // POST REQUEST
@@ -71,6 +81,10 @@ async function start(port, routeUser, routePost) {
 
 
 
+    // --------------------------------------------------------------------------------
+    // POST
+    // --------------------------------------------------------------------------------
+
     // GET ONE POST
     app.get("/post/:idPost", routePost.getpost)
     // --------------------------------------------------------------------------------
@@ -79,7 +93,6 @@ async function start(port, routeUser, routePost) {
     app.get("/post/", routePost.getallpost)
     // --------------------------------------------------------------------------------
 
-
     // --------------------------------------------------------------------------------
     // POST
     // --------------------------------------------------------------------------------
@@ -87,7 +100,6 @@ async function start(port, routeUser, routePost) {
     // ADD SOME POST : param : cleSearch
     app.post("/post/search", routePost.getsearch)
     // --------------------------------------------------------------------------------
-
 
     // --------------------------------------------------------------------------------
     // POST

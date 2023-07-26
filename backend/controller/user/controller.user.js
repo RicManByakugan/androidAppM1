@@ -3,11 +3,50 @@ const crypto = require('crypto')
 const outil = require('../../modele/outil')
 
 
-async function HomeUser(clientConnex, req, res) {
+async function PreferenceUser(clientConnex, res, req) {
+    if (this.session) {
+        nextStep = false
+        dataPref = {}
+        await clientConnex.db("WM").collection('Preference').findOne({ userId: new ObjectID(this.session) })
+            .then(resultat => {
+                dataPref = resultat
+                nextStep = true
+            })
+            .catch(err => {
+                res.send([{ message: "REQUEST ERROR" }])
+            })
+
+        if (nextStep) {
+            await clientConnex.db("WM").collection('User').findOne({ _id: new ObjectID(this.session) })
+                .then(resultat => {
+                    res.send([{ user: resultat, preference: dataPref }])
+                })
+                .catch(err => {
+                    res.send([{ message: "REQUEST ERROR" }])
+                })
+        }
+    } else {
+        res.send([{ message: "USER NOT CONNECTED" }])
+    }
+}
+
+async function AddPreferenceUser(clientConnex, res, req) {
+    if (req.body.userId !== undefined) {
+        await clientConnex.db("WM").collection('Preference').insertOne(req.body)
+            .then(resultat => {
+                res.send({ message: "PREFERENCE ADD SUCCESSFULLY" })
+            })
+            .catch(err => res.send({ message: "SUBSCRIBE FAILED", detailled: "INVALID INFORMATION", err: err }))
+    } else {
+        res.send({ message: "SUBSCRIBE FAILED", detailled: "INVALID INFORMATION" })
+    }
+}
+
+async function HomeUser(clientConnex, res, req) {
     if (this.session) {
         await clientConnex.db("WM").collection('User').findOne({ _id: new ObjectID(this.session) })
             .then(resultat => {
-                res.send([{ message: "USER CONNECTED", user: resultat, session: this.session }])
+                res.send([{ message: "USER CONNECTED", user: resultat }])
             })
             .catch(err => {
                 res.send([{ message: "REQUEST ERROR" }])
@@ -17,7 +56,7 @@ async function HomeUser(clientConnex, req, res) {
     }
 }
 
-async function NotificationUserIDWatch(clientConnex, req, res) {
+async function NotificationUserIDWatch(clientConnex, res, req) {
     if (this.session) {
         var continueVar = false
         var updateit = false
@@ -70,7 +109,7 @@ async function NotificationUserIDWatch(clientConnex, req, res) {
     }
 }
 
-async function NotificationUser(clientConnex, req, res) {
+async function NotificationUser(clientConnex, res, req) {
     if (this.session) {
         var continueVar = false
         var resUserN = {}
@@ -185,4 +224,6 @@ exports.NotificationUserIDWatch = NotificationUserIDWatch
 exports.SubScribeUser = SubScribeUser
 exports.LoginUser = LoginUser
 exports.LogoutUser = LogoutUser
+exports.PreferenceUser = PreferenceUser
+exports.AddPreferenceUser = AddPreferenceUser
 exports.HomeUser = HomeUser

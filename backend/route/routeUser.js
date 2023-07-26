@@ -16,6 +16,28 @@ async function home(req, res) {
     }
 }
 
+async function addpreference(req, res) {
+    try {
+        await connexion.connect();
+        await controllerUser.AddPreferenceUser(connexion, req, res)
+    } catch (e) {
+        console.log(e);
+    } finally {
+        await connexion.close();
+    }
+}
+
+async function preference(req, res) {
+    try {
+        await connexion.connect();
+        await controllerUser.PreferenceUser(connexion, req, res)
+    } catch (e) {
+        console.log(e);
+    } finally {
+        await connexion.close();
+    }
+}
+
 async function notification(req, res) {
     try {
         await connexion.connect();
@@ -76,6 +98,8 @@ function logout(req, res) {
 }
 
 exports.home = home
+exports.preference = preference
+exports.addpreference = addpreference
 exports.addnotif = addnotif
 exports.notification = notification
 exports.notificationID = notificationID
