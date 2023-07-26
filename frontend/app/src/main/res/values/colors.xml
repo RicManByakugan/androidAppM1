@@ -9,6 +9,6 @@
     <color name="wmtheme">#0D4A06</color>
     <color name="white">#FFFFFFFF</color>
     <color name="splashBackground">#FFFFFFFF</color>
-    <color name="button_text_color">#000000</color> <!-- Replace with your desired text color -->
+    <color name="button_text_color">#000000</color>
     <color name="button_background_color">#FF03DAC5</color>
 </resources>
