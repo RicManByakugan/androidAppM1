@@ -9,9 +9,14 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Login extends AppCompatActivity {
     Button button;
@@ -26,6 +31,25 @@ public class Login extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(Login.this, Home.class);
                 startActivity(intent);
+            }
+        });
+        Call<YourResponseModel> call = RetrofitClient.getApiService().getBaseEndpoint();
+        call.enqueue(new Callback<YourResponseModel>() {
+            @Override
+            public void onResponse(Call<YourResponseModel> call, Response<YourResponseModel> response) {
+                if (response.isSuccessful()) {
+                    // Base URL request was successful
+                    Log.d("MainActivity", "Base URL request success!");
+                } else {
+                    // Base URL request failed (you can handle different HTTP error codes here)
+                    Log.e("MainActivity", "Base URL request failed. HTTP code: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<YourResponseModel> call, Throwable t) {
+                // Network request failed or other exceptions occurred
+                Log.e("MainActivity", "Network request failed", t);
             }
         });
     }
