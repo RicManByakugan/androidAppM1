@@ -74,7 +74,7 @@ async function notificationID(req, res) {
 async function login(req, res) {
     try {
         await connexion.connect();
-        await controllerUser.LoginUser(connexion, res, req, false)
+        await controllerUser.LoginUser(connexion, req, res, false)
     } catch (e) {
         console.log(e);
     } finally {
@@ -85,7 +85,7 @@ async function login(req, res) {
 async function subscribe(req, res) {
     try {
         await connexion.connect();
-        await controllerUser.SubScribeUser(connexion, res, req)
+        await controllerUser.SubScribeUser(connexion, req, res)
     } catch (e) {
         console.log(e);
     } finally {
@@ -94,7 +94,7 @@ async function subscribe(req, res) {
 }
 
 function logout(req, res) {
-    controllerUser.LogoutUser(res, req)
+    controllerUser.LogoutUser(req, res)
 }
 
 exports.home = home
