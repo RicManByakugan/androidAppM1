@@ -6,8 +6,8 @@ const { MongoClient, ServerApiVersion } = require('mongodb');
 const app = express()
 
 async function start(port, routeUser, routePost) {
-    const uriBd = "mongodb://127.0.0.1:27017";
-    // const uriBd = "mongodb+srv://welcomemadagascar:MRkdGrGUsnSX34tQ@cluster0.6shj7xp.mongodb.net/";
+    // const uriBd = "mongodb://127.0.0.1:27017";
+    const uriBd = "mongodb+srv://welcomemadagascar:MRkdGrGUsnSX34tQ@cluster0.6shj7xp.mongodb.net/";
     const client = new MongoClient(uriBd, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
     routeUser.sendDb(client)
     routePost.sendDb(client)

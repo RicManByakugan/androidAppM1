@@ -3,7 +3,7 @@ const crypto = require('crypto')
 const outil = require('../../modele/outil')
 
 
-async function PreferenceUser(clientConnex, res, req) {
+async function PreferenceUser(clientConnex, req, res) {
     if (this.session) {
         nextStep = false
         dataPref = {}
@@ -30,7 +30,7 @@ async function PreferenceUser(clientConnex, res, req) {
     }
 }
 
-async function AddPreferenceUser(clientConnex, res, req) {
+async function AddPreferenceUser(clientConnex, req, res) {
     if (req.body.userId !== undefined) {
         await clientConnex.db("WM").collection('Preference').insertOne(req.body)
             .then(resultat => {
@@ -42,7 +42,7 @@ async function AddPreferenceUser(clientConnex, res, req) {
     }
 }
 
-async function HomeUser(clientConnex, res, req) {
+async function HomeUser(clientConnex, req, res) {
     if (this.session) {
         await clientConnex.db("WM").collection('User').findOne({ _id: new ObjectID(this.session) })
             .then(resultat => {
@@ -56,7 +56,7 @@ async function HomeUser(clientConnex, res, req) {
     }
 }
 
-async function NotificationUserIDWatch(clientConnex, res, req) {
+async function NotificationUserIDWatch(clientConnex, req, res) {
     if (this.session) {
         var continueVar = false
         var updateit = false
@@ -109,7 +109,7 @@ async function NotificationUserIDWatch(clientConnex, res, req) {
     }
 }
 
-async function NotificationUser(clientConnex, res, req) {
+async function NotificationUser(clientConnex, req, res) {
     if (this.session) {
         var continueVar = false
         var resUserN = {}
@@ -140,7 +140,7 @@ async function NotificationUser(clientConnex, res, req) {
     }
 }
 
-async function LoginUser(clientConnex, res, req) {
+async function LoginUser(clientConnex, req, res) {
     await clientConnex.db("WM").collection('User').findOne({ logname: req.body.logName })
         .then(resultat => {
             if (resultat) {
@@ -165,7 +165,7 @@ async function LoginUser(clientConnex, res, req) {
         })
 }
 
-async function AddNotificationUser(clientConnex, res, req) {
+async function AddNotificationUser(clientConnex, req, res) {
     if (req.body.message !== undefined && req.body.user !== undefined) {
         req.body.dateNotif = new Date()
         req.body.viewUser = false
@@ -180,7 +180,7 @@ async function AddNotificationUser(clientConnex, res, req) {
 }
 
 
-async function SubScribeUser(clientConnex, res, req) {
+async function SubScribeUser(clientConnex, req, res) {
     if (req.body.name !== undefined && req.body.firstname !== undefined && req.body.logname !== undefined && req.body.password !== undefined) {
         req.body.dateSubscribe = new Date()
         let hashPassword = crypto.createHash('md5').update(req.body.password).digest("hex")
