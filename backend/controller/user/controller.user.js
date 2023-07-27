@@ -179,7 +179,6 @@ async function AddNotificationUser(clientConnex, req, res) {
     }
 }
 
-
 async function SubScribeUser(clientConnex, req, res) {
     if (req.body.name !== undefined && req.body.firstname !== undefined && req.body.logname !== undefined && req.body.password !== undefined) {
         req.body.dateSubscribe = new Date()
@@ -212,7 +211,7 @@ async function SubScribeUser(clientConnex, req, res) {
     }
 }
 
-function LogoutUser(res, req) {
+function LogoutUser(req, res) {
     req.session.destroy()
     this.session = null
     res.send({ message: "LOGOUT SUCCESSFULLY" })
