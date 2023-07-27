@@ -2,63 +2,139 @@ package com.example.wm;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link MessageFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+import java.util.List;
+
 public class MessageFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    // ...
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public MessageFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment PreferenceFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static MessageFragment newInstance(String param1, String param2) {
-        MessageFragment fragment = new MessageFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    private List<String> messagesList = new ArrayList<>();
+    private MessageAdapter adapter;
+    private MessageDetailFragment currentDetailFragment;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
 
+        // Add sample messages to the list (replace with your actual message data)
+        messagesList.add("Pressable Message 1");
+        messagesList.add("Pressable Message 2");
+        messagesList.add("Pressable Message 3");
+
+        // Initialize the adapter with the messages list
+        adapter = new MessageAdapter(messagesList);
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_message, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_message, container, false);
+
+        // Find the RecyclerView
+        RecyclerView recyclerViewMessages = rootView.findViewById(R.id.recyclerViewMessages);
+
+        // Set up the RecyclerView with a LinearLayoutManager
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        recyclerViewMessages.setLayoutManager(layoutManager);
+
+        // Set the adapter to the RecyclerView
+        recyclerViewMessages.setAdapter(adapter);
+
+        return rootView;
+    }
+
+    // ...
+
+    private class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageViewHolder> {
+
+        private List<String> messages;
+
+        public MessageAdapter(List<String> messages) {
+            this.messages = messages;
+        }
+
+        @NonNull
+        @Override
+        public MessageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_message, parent, false);
+            return new MessageViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull MessageViewHolder holder, int position) {
+            String message = messages.get(position);
+            holder.bind(message);
+        }
+
+        @Override
+        public int getItemCount() {
+            return messages.size();
+        }
+
+        public class MessageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+            private TextView textViewMessage;
+
+            public MessageViewHolder(View itemView) {
+                super(itemView);
+                textViewMessage = itemView.findViewById(R.id.textViewMessage);
+                itemView.setOnClickListener(this);
+            }
+
+            public void bind(String message) {
+                textViewMessage.setText(message);
+            }
+
+            @Override
+            public void onClick(View v) {
+                // Handle click event for the message item here
+                int position = getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION) {
+                    String selectedMessage = messages.get(position);
+                    // Check if the MessageDetailFragment already exists in the back stack
+                    FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                    MessageDetailFragment messageDetailFragment = (MessageDetailFragment) fragmentManager.findFragmentByTag("MessageDetailFragment");
+
+                    if (messageDetailFragment == null) {
+                        // If it doesn't exist, add the MessageDetailFragment to the back stack
+                        currentDetailFragment = MessageDetailFragment.newInstance(selectedMessage);
+                        replaceFragmentWithBackStack(currentDetailFragment, "MessageDetailFragment");
+                    } else {
+                        // If it exists, show the existing fragment (remove the updateMessage() call)
+                        currentDetailFragment = messageDetailFragment;
+                        showFragmentWithoutAddingToBackStack(currentDetailFragment);
+                    }
+                }
+            }
+
+            // ...
+        }
+
+        // Helper method to handle fragment transactions with back stack
+        private void replaceFragmentWithBackStack(Fragment fragment, String tag) {
+            FragmentTransaction fragmentTransaction = requireActivity().getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fragmentContainerView, fragment, tag);
+            fragmentTransaction.addToBackStack(tag);
+            fragmentTransaction.commit();
+        }
+
+        // Helper method to show a fragment without adding it to the back stack
+        private void showFragmentWithoutAddingToBackStack(Fragment fragment) {
+            FragmentTransaction fragmentTransaction = requireActivity().getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fragmentContainerView, fragment);
+            fragmentTransaction.commit();
+        }
     }
 }
+
