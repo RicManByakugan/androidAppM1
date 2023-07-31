@@ -67,8 +67,9 @@ public class Login extends AppCompatActivity {
                 Log.e("MainActivity", "Network request failed", t);
             }
         });*/
-        User me=new User("test","vonga","","ovy","", LocalDateTime.now());
-        Call<User> call = RetrofitClient.getApiService().loginUser(me);
+        String logName = "Man";
+        String password = "secret";
+        Call<User> call = RetrofitClient.getApiService().loginUser(logName, password);
         call.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
