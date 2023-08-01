@@ -9,24 +9,16 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.wm.R;
-import com.example.wm.connexion.RetrofitClient;
-import com.example.wm.controller.user.LoginUser;
-import com.example.wm.model.User;
-import com.google.gson.Gson;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import com.example.wm.controller.user.ControllerUser;
 
 public class Login extends AppCompatActivity {
     private Button button;
-    private LoginUser controller = new LoginUser();
+    private ControllerUser controllerUser = new ControllerUser();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +35,7 @@ public class Login extends AppCompatActivity {
 
         String logName = "Man";
         String password = "secret";
-        controller.ConnexionUser(logName, password);
+        controllerUser.ConnexionUser(logName, password);
     }
 
     private void LabelBottom(){
