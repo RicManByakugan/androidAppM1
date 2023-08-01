@@ -12,17 +12,25 @@ import androidx.fragment.app.FragmentManager;
 
 import com.example.wm.R;
 
+import com.example.wm.controller.post.ControllerPost;
+
 public class Home extends AppCompatActivity {
     private boolean isSearchActive = false;
     private boolean isSettingsActive = false;
     private Class<? extends Fragment> lastFragmentClass = ListFragment.class;
+
+    private ControllerPost controllerPost = new ControllerPost();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        init();
 
+        controllerPost.GetAllPost();
+    }
+
+    public void init(){
         Button btnList=findViewById(R.id.btnList);
-
         btnList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -49,7 +57,6 @@ public class Home extends AppCompatActivity {
             }
         });
     }
-
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
 
@@ -69,7 +76,6 @@ public class Home extends AppCompatActivity {
 
         return true;
     }
-
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_search:

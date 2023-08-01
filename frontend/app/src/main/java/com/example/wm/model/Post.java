@@ -1,52 +1,58 @@
 package com.example.wm.model;
 
 public class Post {
-    private String numero;
-    private String modele;
-    private String marque;
-    private int annee;
 
-    // Constructors
-    public Post() {
+    private String _id = null;
+    private String imageUrl = null;
+    private String title = null;
+    private String datePost = null;
+    private String Lieu = null;
+
+    public Post(String _id, String imageUrl, String title, String datePost, String lieu) {
+        this._id = _id;
+        this.imageUrl = imageUrl;
+        this.title = title;
+        this.datePost = datePost;
+        Lieu = lieu;
     }
 
-    public Post(String numero, String modele, String marque, int annee) {
-        this.numero = numero;
-        this.modele = modele;
-        this.marque = marque;
-        this.annee = annee;
+    public String get_id() {
+        return _id;
     }
 
-    // Getters and Setters
-    public String getNumero() {
-        return numero;
+    public void set_id(String _id) {
+        this._id = _id;
     }
 
-    public void setNumero(String numero) {
-        this.numero = numero;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public String getModele() {
-        return modele;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
-    public void setModele(String modele) {
-        this.modele = modele;
+    public String getTitle() {
+        return title;
     }
 
-    public String getMarque() {
-        return marque;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public void setMarque(String marque) {
-        this.marque = marque;
+    public String getDatePost() {
+        return datePost;
     }
 
-    public int getAnnee() {
-        return annee;
+    public void setDatePost(String datePost) {
+        this.datePost = datePost;
     }
 
-    public void setAnnee(int annee) {
-        this.annee = annee;
+    public String getLieu() {
+        return Lieu;
+    }
+
+    public void setLieu(String lieu) {
+        Lieu = lieu;
     }
 }

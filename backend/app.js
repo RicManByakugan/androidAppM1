@@ -86,7 +86,7 @@ async function start(port, routeUser, routePost) {
     // --------------------------------------------------------------------------------
 
     // GET ONE POST
-    app.get("/post/:idPost", routePost.getpost)
+    app.get("/post/:id", routePost.getpost)
     // --------------------------------------------------------------------------------
 
     // GET ALL POST

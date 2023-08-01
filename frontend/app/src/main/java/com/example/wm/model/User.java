@@ -65,7 +65,5 @@ public class User {
         return dateSubscribe;
     }
 
-    public void setDateSubscribe(LocalDateTime dateSubscribe) {
-        this.dateSubscribe = dateSubscribe;
-    }
+    public void setDateSubscribe(LocalDateTime dateSubscribe) { this.dateSubscribe = dateSubscribe; }
 }

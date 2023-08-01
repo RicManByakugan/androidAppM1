@@ -24,7 +24,7 @@ async function GetAllPost(clientConnex, req, res) {
 }
 
 async function GetPostID(clientConnex, req, res) {
-        await clientConnex.db("WM").collection('Post').findOne({ _id: new ObjectID(req.params.idPost) })
+        await clientConnex.db("WM").collection('Post').findOne({ _id: new ObjectID(req.params.id) })
             .then(resss => {
                 if (resss) {
                     res.send(resss)
@@ -36,7 +36,6 @@ async function GetPostID(clientConnex, req, res) {
                 res.send({ message: "REQUEST ERROR" })
             })
 }
-
 
 async function GetSearch(clientConnex, req, res) {
     if (req.body.cleSearch) {

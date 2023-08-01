@@ -11,6 +11,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public interface ApiService {
 
@@ -19,5 +20,8 @@ public interface ApiService {
     Call<User> loginUser(@Field("logName") String logName, @Field("password") String password);
 
     @GET("/post/")
-    Call<List<Post>> getAllPost();
+    Call<Post> getAllPost();
+
+    @GET("/post/{id}")
+    Call<Post> getOnePost(@Path("id") String id);
 }
