@@ -1,10 +1,8 @@
-package com.example.wm.view;
+package com.example.wm;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-
-import com.example.wm.R;
 
 public class MainActivity extends AppCompatActivity {
 
