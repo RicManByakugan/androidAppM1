@@ -34,10 +34,12 @@ public class Login extends AppCompatActivity {
 
                 TextView textPass = findViewById(R.id.textPass);
                 String passText = textPass.getText().toString();
+                Toast.makeText(Login.this, "Connexion ...", Toast.LENGTH_SHORT).show();
                 a.userConnect(loginText, passText, new ControllerUser.UserConnectCallback() {
                     @Override
                     public void onUserConnectResult(boolean isConnected) {
                         if (isConnected) {
+                            Toast.makeText(Login.this, "Connexion successfully", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(Login.this, Home.class);
                             startActivity(intent);
                         } else {

@@ -19,7 +19,7 @@ import com.example.wm.controller.user.ControllerUser;
 
 public class Sign extends AppCompatActivity {
     Button button;
-    ControllerUser a=new ControllerUser();
+    ControllerUser a = new ControllerUser();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,10 +40,12 @@ public class Sign extends AppCompatActivity {
 
                 TextView textPass = findViewById(R.id.pswOne);
                 String passText = textPass.getText().toString();
+                Toast.makeText(Sign.this, "Registration ...", Toast.LENGTH_SHORT).show();
                 a.userRegister(nameText,firstText,loginText, passText, new ControllerUser.UserRegisterCallback() {
                     @Override
                     public void onUserRegisterResult(boolean isConnected) {
                         if (isConnected) {
+                            Toast.makeText(Sign.this, "Registration successfully", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(Sign.this, Login.class);
                             startActivity(intent);
                         } else {

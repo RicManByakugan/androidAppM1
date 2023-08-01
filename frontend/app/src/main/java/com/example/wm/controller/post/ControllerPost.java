@@ -42,8 +42,13 @@ public class ControllerPost {
         });
     }
 
-    public void GetPost(String _id){
+
+    public interface GetPostCallBack{
+        void onGetPostResult(String data);
+    }
+    public void GetPost(String _id, ControllerPost.GetPostCallBack callback){
         Call<Post> call = RetrofitClient.getApiService().getOnePost(_id);
+
         call.enqueue(new Callback<Post>() {
             @Override
             public void onResponse(Call<Post> call, Response<Post> response) {
@@ -52,6 +57,7 @@ public class ControllerPost {
                     if (postlist != null){
                         String jsonResponse = new Gson().toJson(postlist);
                         Log.d("ONE POST", "JSON Response: " + jsonResponse);
+                        callback.onGetPostResult(jsonResponse);
                     }else{
                         Log.d("ONE POST", "DATA EMPTY********************************************");
                     }
@@ -64,5 +70,6 @@ public class ControllerPost {
                 Log.d("ONE POST", "ERROR CONNEXION");
             }
         });
+
     }
 }
