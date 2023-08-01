@@ -8,6 +8,7 @@ import com.example.wm.model.YourResponseModel;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.Field;
 
 public class ControllerUser {
 
@@ -42,6 +43,41 @@ public class ControllerUser {
             public void onFailure(Call<YourResponseModel> call, Throwable t) {
                 // Network request failed or other exceptions occurred
                 callback.onUserConnectResult(false);
+                Log.e("MainActivity", "Network request failed", t);
+            }
+        });
+    }
+
+    public interface UserRegisterCallback {
+        void onUserRegisterResult(boolean isConnected);
+    }
+    public void userRegister( String name,  String firstname,
+                            String logname,  String password, ControllerUser.UserRegisterCallback callback) {
+        Call<YourResponseModel> call = RetrofitClient.getApiService().addUserSubscription( name, firstname,
+                logname, password);
+        call.enqueue(new Callback<YourResponseModel>() {
+            @Override
+            public void onResponse(Call<YourResponseModel> call, Response<YourResponseModel> response) {
+                if (response.isSuccessful()) {
+                    YourResponseModel responseData = response.body();
+                    if (responseData.message.compareTo("SUBSCRIBE SUCCESSFULLY") == 0) {
+                        callback.onUserRegisterResult(true);
+                        Log.d("MainActivity", "The response is: " + responseData.message);
+                    } else {
+                        callback.onUserRegisterResult(false);
+                        Log.d("MainActivity", "Response body is error: " + responseData.message);
+                    }
+                } else {
+                    // Request failed (you can handle different HTTP error codes here)
+                    callback.onUserRegisterResult(false);
+                    Log.e("MainActivity", "Request failed. HTTP code: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<YourResponseModel> call, Throwable t) {
+                // Network request failed or other exceptions occurred
+                callback.onUserRegisterResult(false);
                 Log.e("MainActivity", "Network request failed", t);
             }
         });

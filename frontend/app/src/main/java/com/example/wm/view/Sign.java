@@ -10,16 +10,50 @@ import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.wm.R;
+import com.example.wm.controller.user.ControllerUser;
 
 public class Sign extends AppCompatActivity {
+    Button button;
+    ControllerUser a=new ControllerUser();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign);
         LabelBottom();
+         button = (Button) findViewById(R.id.btnSign);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TextView textName = findViewById(R.id.nameUser);
+                String nameText = textName.getText().toString();
+
+                TextView textFirst= findViewById(R.id.firstNameUser);
+                String firstText = textFirst.getText().toString();
+
+                TextView textLogin = findViewById(R.id.logName);
+                String loginText = textLogin.getText().toString();
+
+                TextView textPass = findViewById(R.id.pswOne);
+                String passText = textPass.getText().toString();
+                a.userRegister(nameText,firstText,loginText, passText, new ControllerUser.UserRegisterCallback() {
+                    @Override
+                    public void onUserRegisterResult(boolean isConnected) {
+                        if (isConnected) {
+                            Intent intent = new Intent(Sign.this, Login.class);
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(Sign.this, "Registration failed", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+            }
+        });
     }
 
     private void LabelBottom(){
