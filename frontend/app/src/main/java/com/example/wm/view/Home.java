@@ -1,4 +1,4 @@
-package com.example.wm;
+package com.example.wm.view;
 
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +9,8 @@ import android.view.MenuItem;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+
+import com.example.wm.R;
 
 public class Home extends AppCompatActivity {
     private boolean isSearchActive = false;

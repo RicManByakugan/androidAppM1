@@ -1,8 +1,10 @@
-package com.example.wm;
+package com.example.wm.view;
 import android.os.Bundle;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
+
+import com.example.wm.R;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
 

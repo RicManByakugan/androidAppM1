@@ -6,6 +6,8 @@ import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.wm.view.Login;
+
 public class SplashActivity extends AppCompatActivity {
     private static final long SPLASH_DELAY = 4000; // 2 seconds
 

@@ -1,4 +1,4 @@
-package com.example.wm;
+package com.example.wm.model;
 
 public class Post {
     private String numero;

@@ -1,4 +1,4 @@
-package com.example.wm;
+package com.example.wm.view;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,7 +14,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.wm.R;
 import com.example.wm.connexion.RetrofitClient;
+import com.example.wm.controller.user.LoginUser;
 import com.example.wm.model.User;
 import com.google.gson.Gson;
 
@@ -23,7 +25,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class Login extends AppCompatActivity {
-    Button button;
+    private Button button;
+    private LoginUser controller = new LoginUser();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,60 +40,10 @@ public class Login extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        /*Call<YourResponseModel> call = RetrofitClient.getApiService().getBaseEndpoint();
-        call.enqueue(new Callback<YourResponseModel>() {
-            @Override
-            public void onResponse(Call<YourResponseModel> call, Response<YourResponseModel> response) {
-                if (response.isSuccessful()) {
-                    // Base URL request was successful
-                    YourResponseModel responseData = response.body();
-                    if (responseData != null) {
-                        // Convert the response body to a JSON string
-                        String jsonResponse = new Gson().toJson(responseData);
-                        Log.d("MainActivity", "JSON Response: " + jsonResponse);
-                    } else {
-                        Log.d("MainActivity", "Response body is empty.");
-                    }
-                } else {
-                    // Base URL request failed (you can handle different HTTP error codes here)
-                    Log.e("MainActivity", "Base URL request failed. HTTP code: " + response.code());
-                }
-            }
 
-            @Override
-            public void onFailure(Call<YourResponseModel> call, Throwable t) {
-                // Network request failed or other exceptions occurred
-                Log.e("MainActivity", "Network request failed", t);
-            }
-        });*/
         String logName = "Man";
         String password = "secret";
-        Call<User> call = RetrofitClient.getApiService().loginUser(logName, password);
-        call.enqueue(new Callback<User>() {
-            @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-                if (response.isSuccessful()) {
-                    // Request was successful
-                    User responseData = response.body();
-                    if (responseData != null ) {
-                        // Convert the response body to a JSON string
-                        String jsonResponse = new Gson().toJson(responseData);
-                        Log.d("MainActivity", "JSON Response: " + jsonResponse);
-                    } else {
-                        Log.d("MainActivity", "Response body is empty.");
-                    }
-                } else {
-                    // Request failed (you can handle different HTTP error codes here)
-                    Log.e("MainActivity", "Request failed. HTTP code: " + response.code());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<User> call, Throwable t) {
-                // Network request failed or other exceptions occurred
-                Log.e("MainActivity", "Network request failed", t);
-            }
-        });
+        controller.ConnexionUser(logName, password);
     }
 
     private void LabelBottom(){

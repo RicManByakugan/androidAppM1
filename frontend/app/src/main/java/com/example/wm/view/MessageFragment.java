@@ -1,4 +1,4 @@
-package com.example.wm;
+package com.example.wm.view;
 
 import android.os.Bundle;
 
@@ -13,6 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.example.wm.R;
 
 import java.util.ArrayList;
 import java.util.List;

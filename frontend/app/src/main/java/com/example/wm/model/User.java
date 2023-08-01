@@ -1,14 +1,14 @@
-package com.example.wm;
+package com.example.wm.model;
 
 import java.time.LocalDateTime;
 
 public class User {
-    private String _id;
-    private String name;
-    private String firstname;
-    private String logname;
-    private String password;
-    private LocalDateTime dateSubscribe;
+    private String _id = null;
+    private String name = null;
+    private String firstname = null;
+    private String logname = null;
+    private String password = null;
+    private LocalDateTime dateSubscribe = null;
 
     // Constructor
     public User(String _id, String name, String firstname, String logname, String password, LocalDateTime dateSubscribe) {

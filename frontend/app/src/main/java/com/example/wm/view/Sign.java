@@ -1,4 +1,4 @@
-package com.example.wm;
+package com.example.wm.view;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,7 +11,8 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.example.wm.R;
 
 public class Sign extends AppCompatActivity {
     @Override
