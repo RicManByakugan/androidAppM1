@@ -6,6 +6,8 @@ import com.example.wm.connexion.RetrofitClient;
 import com.example.wm.model.Post;
 import com.google.gson.Gson;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -16,12 +18,12 @@ public class ControllerPost {
     }
 
     public void GetAllPost(){
-        Call<Post> call = RetrofitClient.getApiService().getAllPost();
-        call.enqueue(new Callback<Post>() {
+        Call<List<Post>> call = RetrofitClient.getApiService().getAllPosts();
+        call.enqueue(new Callback<List<Post>>() {
             @Override
-            public void onResponse(Call<Post> call, Response<Post> response) {
+            public void onResponse(Call<List<Post>> call, Response<List<Post>> response) {
                 if (response.isSuccessful()){
-                    Post postlist = response.body();
+                    List<Post> postlist = response.body();
                     if (postlist != null){
                         String jsonResponse = new Gson().toJson(postlist);
                         Log.d("ALL POST", "JSON Response: " + jsonResponse);
@@ -34,8 +36,8 @@ public class ControllerPost {
             }
 
             @Override
-            public void onFailure(Call<Post> call, Throwable t) {
-                Log.d("ALL POST", "ERROR CONNEXION");
+            public void onFailure(Call<List<Post>> call, Throwable t) {
+                Log.d("ALL POST", String.valueOf(t));
             }
         });
     }

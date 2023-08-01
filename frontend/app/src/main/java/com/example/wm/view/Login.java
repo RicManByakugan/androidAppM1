@@ -12,13 +12,14 @@ import android.text.style.ClickableSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.wm.R;
 import com.example.wm.controller.user.ControllerUser;
 
 public class Login extends AppCompatActivity {
-    private Button button;
-    private ControllerUser controllerUser = new ControllerUser();
+    Button button;
+    ControllerUser a=new ControllerUser();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,14 +29,29 @@ public class Login extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Login.this, Home.class);
-                startActivity(intent);
+                TextView textLogin = findViewById(R.id.textLogin);
+                String loginText = textLogin.getText().toString();
+
+                TextView textPass = findViewById(R.id.textPass);
+                String passText = textPass.getText().toString();
+                a.userConnect(loginText, passText, new ControllerUser.UserConnectCallback() {
+                    @Override
+                    public void onUserConnectResult(boolean isConnected) {
+                        if (isConnected) {
+                            Intent intent = new Intent(Login.this, Home.class);
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(Login.this, "Connexion failed", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
             }
         });
 
-        String logName = "Man";
-        String password = "secret";
-        controllerUser.ConnexionUser(logName, password);
+
+
+
     }
 
     private void LabelBottom(){

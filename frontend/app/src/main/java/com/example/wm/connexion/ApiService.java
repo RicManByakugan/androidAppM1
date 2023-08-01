@@ -2,6 +2,7 @@ package com.example.wm.connexion;
 
 import com.example.wm.model.Post;
 import com.example.wm.model.User;
+import com.example.wm.model.YourResponseModel;
 
 
 import java.util.List;
@@ -15,8 +16,7 @@ import retrofit2.http.Path;
 
 public interface ApiService {
 
-<<<<<<< Updated upstream:frontend/app/src/main/java/com/example/wm/connexion/ApiService.java
-=======
+
     // Add the base URL endpoint
     // Base Endpoint
     @GET("/")
@@ -32,7 +32,7 @@ public interface ApiService {
     @GET("/user/preference")
     Call<YourResponseModel> getUserPreference();
 
->>>>>>> Stashed changes:frontend/app/src/main/java/com/example/wm/ApiService.java
+
     @FormUrlEncoded
     @POST("/user/preference/add")
     Call<YourResponseModel> addUserPreference(@Field("userId") String userId, @Field("preference") String preference);
@@ -58,13 +58,13 @@ public interface ApiService {
     Call<YourResponseModel> getPost(@Field("idPost") String idPost);
 
     @GET("/post/")
-<<<<<<< Updated upstream:frontend/app/src/main/java/com/example/wm/connexion/ApiService.java
-    Call<Post> getAllPost();
+
+    Call<List<Post>> getAllPosts();
 
     @GET("/post/{id}")
     Call<Post> getOnePost(@Path("id") String id);
-=======
-    Call<List<Post>> getAllPosts();
+
+
 
     @FormUrlEncoded
     @POST("/post/search")
@@ -74,5 +74,5 @@ public interface ApiService {
     @POST("/post/")
     Call<YourResponseModel> addPost(@Field("param1") String param1, @Field("param2") String param2);
 
->>>>>>> Stashed changes:frontend/app/src/main/java/com/example/wm/ApiService.java
+
 }
