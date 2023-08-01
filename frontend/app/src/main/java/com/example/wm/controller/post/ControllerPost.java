@@ -57,7 +57,6 @@ public class ControllerPost {
                     Log.d("ONE POST", "ERROR FETCH DATA");
                 }
             }
-
             @Override
             public void onFailure(Call<Post> call, Throwable t) {
                 Log.d("ONE POST", "ERROR CONNEXION");
