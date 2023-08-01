@@ -27,7 +27,7 @@ public class Home extends AppCompatActivity {
         init();
 
 
-        controllerPost.GetAllPost();
+
     }
 
     public void init(){

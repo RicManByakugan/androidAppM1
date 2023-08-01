@@ -3,14 +3,14 @@ package com.example.wm.model;
 public class Post {
 
     private String _id = null;
-    private String imageUrl = null;
+    private String image_url = null;
     private String title = null;
     private String datePost = null;
     private String Lieu = null;
 
-    public Post(String _id, String imageUrl, String title, String datePost, String lieu) {
+    public Post(String _id, String image_url, String title, String datePost, String lieu) {
         this._id = _id;
-        this.imageUrl = imageUrl;
+        this.image_url = image_url;
         this.title = title;
         this.datePost = datePost;
         Lieu = lieu;
@@ -24,12 +24,12 @@ public class Post {
         this._id = _id;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getimage_url() {
+        return image_url;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setimage_url(String imageUrl) {
+        this.image_url = image_url;
     }
 
     public String getTitle() {

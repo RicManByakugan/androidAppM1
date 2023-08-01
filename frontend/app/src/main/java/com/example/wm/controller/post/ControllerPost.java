@@ -17,27 +17,30 @@ public class ControllerPost {
     public ControllerPost() {
     }
 
-    public void GetAllPost(){
+    public interface GetAllPostCallback {
+        void onPostsReceived(List<Post> postList);
+        void onError(String errorMessage);
+    }
+    public void GetAllPost(GetAllPostCallback callback) {
         Call<List<Post>> call = RetrofitClient.getApiService().getAllPosts();
         call.enqueue(new Callback<List<Post>>() {
             @Override
             public void onResponse(Call<List<Post>> call, Response<List<Post>> response) {
-                if (response.isSuccessful()){
-                    List<Post> postlist = response.body();
-                    if (postlist != null){
-                        String jsonResponse = new Gson().toJson(postlist);
-                        Log.d("ALL POST", "JSON Response: " + jsonResponse);
-                    }else{
-                        Log.d("ALL POST", "DATA EMPTY********************************************");
+                if (response.isSuccessful()) {
+                    List<Post> postList = response.body();
+                    if (postList != null) {
+                        callback.onPostsReceived(postList); // Pass the list of posts to the callback
+                    } else {
+                        callback.onError("DATA EMPTY");
                     }
-                }else{
-                    Log.d("ALL POST", "ERROR FETCH DATA");
+                } else {
+                    callback.onError("ERROR FETCH DATA");
                 }
             }
 
             @Override
             public void onFailure(Call<List<Post>> call, Throwable t) {
-                Log.d("ALL POST", String.valueOf(t));
+                callback.onError(t.getMessage());
             }
         });
     }

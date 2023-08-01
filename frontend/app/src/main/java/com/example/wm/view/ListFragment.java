@@ -4,13 +4,24 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ListView;
 
 import com.example.wm.R;
+import com.example.wm.controller.post.ControllerPost;
+import com.example.wm.model.Post;
+import com.example.wm.model.PostAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,6 +38,10 @@ public class ListFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private ControllerPost controllerPost = new ControllerPost();
+    private List<Post> postList;
+    private PostAdapter postAdapter;
+    private ListView listViewPosts;
 
     public ListFragment() {
         // Required empty public constructor
@@ -57,23 +72,49 @@ public class ListFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+
+    }
+
+    private void showPosts() {
+        controllerPost.GetAllPost(new ControllerPost.GetAllPostCallback() {
+            @Override
+            public void onPostsReceived(List<Post> postList) {
+                // Handle the received list of posts
+                postAdapter = new PostAdapter(getActivity(), postList);
+
+                // Set the custom adapter on the ListView associated with the ListFragment
+                listViewPosts.setAdapter(postAdapter);
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                // Handle the error case
+                Log.d("ALL POST", errorMessage);
+
+                // Pass an empty list to the adapter to trigger the error view
+                postAdapter = new PostAdapter(getActivity(), new ArrayList<>());
+
+                // Set the custom adapter on the ListView associated with the ListFragment
+                listViewPosts.setAdapter(postAdapter);
+            }
+        });
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_list, container, false);
 
-        // Find the button inside the inflated view
-        button = view.findViewById(R.id.btnShow);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), Detail.class);
-                startActivity(intent);
-            }
-        });
+        // Find the ListView inside the inflated view
+        listViewPosts = view.findViewById(R.id.listViewPosts);
+
+        // Set an empty adapter initially to avoid a NullPointerException
+        postAdapter = new PostAdapter(getActivity(), new ArrayList<>());
+        listViewPosts.setAdapter(postAdapter);
+
+        // Load and display the posts
+        showPosts();
 
         return view;
     }
