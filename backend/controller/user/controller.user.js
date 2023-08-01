@@ -186,10 +186,10 @@ async function SubScribeUser(clientConnex, req, res) {
         req.body.password = hashPassword
         continueVar = false
         await clientConnex.db("WM")
-            .collection('User').findOne({ email: req.body.logname })
+            .collection('User').findOne({ logname: req.body.logname })
             .then(resUser => {
                 if (resUser) {
-                    res.send({ message: "SUBSCRIBE FAILED", detailled: "LOGNAME ALREADY USED" })
+                    res.send({ message: "SUBSCRIBE FAILED", detailled: "LOGIN NAME ALREADY USED" })
                     req.body.name = req.body.name.toUpperCase()
                     req.body.firstname = req.body.firstname.toUpperCase()
                     continueVar = false
