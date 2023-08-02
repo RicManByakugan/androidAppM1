@@ -34,7 +34,6 @@ public class Detail extends AppCompatActivity {
         setContentView(R.layout.detail);
 
         getInitPost("64c88bcb700c072f9bcc7327");
-
     }
 
     private void initWidget(){
@@ -45,7 +44,7 @@ public class Detail extends AppCompatActivity {
 
         try {
             textView.setText(obj.getString("title"));
-            textViewDesc.setText(obj.getString("datePost") + " - " + obj.getString("Lieu"));
+            textViewDesc.setText(obj.getString("datePost") + " | " + obj.getString("Lieu"));
 
             Glide.with(this)
                     .load(obj.getString("image_url"))
