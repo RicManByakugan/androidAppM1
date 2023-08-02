@@ -86,6 +86,7 @@ public class ListFragment extends Fragment {
                 // Set the custom adapter on the ListView associated with the ListFragment
                 listViewPosts.setAdapter(postAdapter);
             }
+
             @Override
             public void onError(String errorMessage) {
                 // Handle the error case

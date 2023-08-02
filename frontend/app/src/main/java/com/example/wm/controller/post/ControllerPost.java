@@ -59,18 +59,21 @@ public class ControllerPost {
                     Post postlist = response.body();
                     if (postlist != null){
                         String jsonResponse = new Gson().toJson(postlist);
-                        Log.d("ONE POST", "JSON Response: " + jsonResponse);
+                        //Log.d("ONE POST", "JSON Response: " + jsonResponse);
                         callback.onGetPostResult(jsonResponse);
                     }else{
-                        Log.d("ONE POST", "DATA EMPTY********************************************");
+                        callback.onError("DATA EMPTY");
+                        //Log.d("ONE POST", "DATA EMPTY********************************************");
                     }
                 }else{
-                    Log.d("ONE POST", "ERROR FETCH DATA");
+                    callback.onError("ERROR ");
+                    //Log.d("ONE POST", "ERROR FETCH DATA");
                 }
             }
             @Override
             public void onFailure(Call<Post> call, Throwable t) {
-                Log.d("ONE POST", "ERROR CONNEXION");
+                callback.onError("ERROR ");
+                //Log.d("ONE POST", "ERROR CONNEXION");
             }
         });
 
