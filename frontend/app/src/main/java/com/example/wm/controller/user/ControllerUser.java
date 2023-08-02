@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.example.wm.connexion.RetrofitClient;
 import com.example.wm.model.YourResponseModel;
+import com.google.gson.Gson;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -16,7 +17,7 @@ public class ControllerUser {
     }
 
     public interface UserConnectCallback {
-        void onUserConnectResult(boolean isConnected);
+        void onUserConnectResult(boolean isConnected, String jsonUser);
     }
     public void userConnect(String logName, String password, ControllerUser.UserConnectCallback callback) {
         Call<YourResponseModel> call = RetrofitClient.getApiService().loginUser(logName, password);
@@ -26,15 +27,15 @@ public class ControllerUser {
                 if (response.isSuccessful()) {
                     YourResponseModel responseData = response.body();
                     if (responseData.message.compareTo("LOGIN SUCCESSFULLY") == 0) {
-                        callback.onUserConnectResult(true);
+                        callback.onUserConnectResult(true, new Gson().toJson(response.body()));
                         Log.d("MainActivity", "The response is: " + responseData.message);
                     } else {
-                        callback.onUserConnectResult(false);
+                        callback.onUserConnectResult(false, new Gson().toJson(response.body()));
                         Log.d("MainActivity", "Response body is error: " + responseData.message);
                     }
                 } else {
                     // Request failed (you can handle different HTTP error codes here)
-                    callback.onUserConnectResult(false);
+                    callback.onUserConnectResult(false, new Gson().toJson(response.body()));
                     Log.e("MainActivity", "Request failed. HTTP code: " + response.code());
                 }
             }
@@ -42,7 +43,7 @@ public class ControllerUser {
             @Override
             public void onFailure(Call<YourResponseModel> call, Throwable t) {
                 // Network request failed or other exceptions occurred
-                callback.onUserConnectResult(false);
+                callback.onUserConnectResult(false, new Gson().toJson(""));
                 Log.e("MainActivity", "Network request failed", t);
             }
         });

@@ -1,6 +1,8 @@
 package com.example.wm.view;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.view.Menu;
@@ -26,7 +28,11 @@ public class Home extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         init();
 
-
+        Intent intent = getIntent();
+        if (intent != null) {
+            String userData = intent.getStringExtra("user");
+            Log.d("User", "" + userData);
+        }
 
     }
 

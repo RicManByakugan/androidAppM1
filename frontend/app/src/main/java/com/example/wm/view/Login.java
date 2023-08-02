@@ -37,10 +37,11 @@ public class Login extends AppCompatActivity {
                 Toast.makeText(Login.this, "Connexion ...", Toast.LENGTH_SHORT).show();
                 a.userConnect(loginText, passText, new ControllerUser.UserConnectCallback() {
                     @Override
-                    public void onUserConnectResult(boolean isConnected) {
+                    public void onUserConnectResult(boolean isConnected, String dataUser) {
                         if (isConnected) {
                             Toast.makeText(Login.this, "Connexion successfully", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(Login.this, Home.class);
+                            intent.putExtra("user", dataUser);
                             startActivity(intent);
                         } else {
                             Toast.makeText(Login.this, "Connexion failed", Toast.LENGTH_SHORT).show();
@@ -67,7 +68,7 @@ public class Login extends AppCompatActivity {
                 startActivity(intent);
             }
         };
-        ss.setSpan(actionClicked, 7, ss.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        ss.setSpan(actionClicked, 0, ss.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         label.setText(ss);
         label.setMovementMethod(LinkMovementMethod.getInstance());
     }
