@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.wm.R;
 import com.example.wm.controller.post.ControllerPost;
 import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 
 import org.json.JSONObject;
 
@@ -23,7 +24,7 @@ public class Detail extends AppCompatActivity {
 
     private ControllerPost controllerPost = new ControllerPost();
     private JSONObject obj;
-    private ImageView image;
+    private ImageView imageViewPost;
     private TextView textView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +36,7 @@ public class Detail extends AppCompatActivity {
     }
 
     private void initWidget(){
-        image = (ImageView) findViewById(R.id.imageUrl);
+        imageViewPost = (ImageView) findViewById(R.id.imageUrl);
         textView = (TextView) findViewById(R.id.titlePost);
         try {
             /*Bitmap bitmap = BitmapFactory.decodeStream((InputStream)new URL(obj.getString("image_url")).getContent());
@@ -43,6 +44,11 @@ public class Detail extends AppCompatActivity {
             textView.setText(obj.getString("title"));
             //Picasso.get().load(obj.getString("image_url")).into(image);
             //Picasso.with(this).load(obj.getString("image_url")).into(image);
+            Glide.with(this)
+                    .load(obj.getString("image_url"))
+                    .placeholder(R.drawable.red_placeholder_image) // Placeholder image while loading (if needed)
+                    .error(R.drawable.error) // Image to display in case of error (if needed)
+                    .into(imageViewPost);
         }catch (Exception e){
             Log.d("ERROR","ERROR ");
         }
