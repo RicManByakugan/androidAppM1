@@ -16,10 +16,11 @@ import android.widget.Toast;
 
 import com.example.wm.R;
 import com.example.wm.controller.user.ControllerUser;
+import com.example.wm.tools.Serializer;
 
 public class Login extends AppCompatActivity {
     Button button;
-    ControllerUser a=new ControllerUser();
+    ControllerUser a = new ControllerUser();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +43,8 @@ public class Login extends AppCompatActivity {
                             Toast.makeText(Login.this, "Connexion successfully", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(Login.this, Home.class);
                             intent.putExtra("user", dataUser);
+                            // STOCK USER INFORMATION
+                            // Serializer.serialize("dataUser", dataUser, Login.this);
                             startActivity(intent);
                         } else {
                             Toast.makeText(Login.this, "Connexion failed", Toast.LENGTH_SHORT).show();
