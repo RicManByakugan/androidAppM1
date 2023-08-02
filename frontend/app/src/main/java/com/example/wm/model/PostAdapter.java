@@ -1,6 +1,7 @@
 package com.example.wm.model;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.wm.R;
+import com.example.wm.view.Detail;
 import com.squareup.picasso.Picasso;
 import java.util.List;
 
@@ -49,7 +51,17 @@ public class PostAdapter extends ArrayAdapter<Post> {
                 .error(R.drawable.error) // Image to display in case of error (if needed)
                 .into(imageViewPost);
 
+        itemView.setOnClickListener(view -> {
+            // Create an intent to launch the Detail activity
+            Intent intent = new Intent(context, Detail.class);
 
+            // Pass data to the intent as extras
+            intent.putExtra("postID", currentPost.get_id());
+
+
+            // Start the Detail activity
+            context.startActivity(intent);
+        });
 
         return itemView;
     }
