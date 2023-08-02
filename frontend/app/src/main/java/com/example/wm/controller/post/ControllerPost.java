@@ -48,6 +48,7 @@ public class ControllerPost {
 
     public interface GetPostCallBack{
         void onGetPostResult(String data);
+        void onError(String errorMessage);
     }
     public void GetPost(String _id, ControllerPost.GetPostCallBack callback) {
         Call<Post> call = RetrofitClient.getApiService().getOnePost(_id);

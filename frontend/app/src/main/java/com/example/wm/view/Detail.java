@@ -69,6 +69,11 @@ public class Detail extends AppCompatActivity {
                     Log.e("My App", "Could not parse malformed JSON: \"" + data + "\"");
                 }
             }
+
+            @Override
+            public void onError(String errorMessage) {
+                Log.e("My App", "The error is:"+errorMessage);
+            }
         });
     }
 
