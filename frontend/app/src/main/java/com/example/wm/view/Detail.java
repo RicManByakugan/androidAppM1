@@ -26,6 +26,8 @@ public class Detail extends AppCompatActivity {
     private JSONObject obj;
     private ImageView imageViewPost;
     private TextView textView;
+    private TextView textViewDesc;
+    private TextView textViewDateL;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,12 +40,13 @@ public class Detail extends AppCompatActivity {
     private void initWidget(){
         imageViewPost = (ImageView) findViewById(R.id.imageUrl);
         textView = (TextView) findViewById(R.id.titlePost);
+        textViewDesc = (TextView) findViewById(R.id.textDescription);
+        textViewDateL = (TextView) findViewById(R.id.textDate);
+
         try {
-            /*Bitmap bitmap = BitmapFactory.decodeStream((InputStream)new URL(obj.getString("image_url")).getContent());
-            image.setImageBitmap(bitmap);*/
             textView.setText(obj.getString("title"));
-            //Picasso.get().load(obj.getString("image_url")).into(image);
-            //Picasso.with(this).load(obj.getString("image_url")).into(image);
+            textViewDesc.setText(obj.getString("datePost") + " - " + obj.getString("Lieu"));
+
             Glide.with(this)
                     .load(obj.getString("image_url"))
                     .placeholder(R.drawable.red_placeholder_image) // Placeholder image while loading (if needed)
