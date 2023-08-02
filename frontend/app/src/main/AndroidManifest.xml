@@ -14,17 +14,22 @@
         tools:targetApi="28" >
         <activity
             android:name=".view.Sign"
-            android:exported="false" />
+            android:exported="false"
+            android:label="WelcomeMada"
+            />
         <activity
             android:name=".view.Login"
-            android:exported="false" />
+            android:exported="false"
+            android:label="WelcomeMada"
+            />
         <activity
             android:name=".view.Home"
             android:exported="false"
+            android:label="WelcomeMada"
             />
         <activity
             android:name=".view.Detail"
-            android:label="Detail Activity">
+            android:label="WelcomeMada">
 
     </activity>
         <activity
