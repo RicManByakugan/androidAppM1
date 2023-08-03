@@ -15,6 +15,7 @@ import androidx.fragment.app.FragmentManager;
 import com.example.wm.R;
 
 import com.example.wm.controller.post.ControllerPost;
+import com.example.wm.controller.user.ControllerUser;
 
 import org.json.JSONObject;
 
@@ -30,19 +31,17 @@ public class Home extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         init();
-
-        Intent intent = getIntent();
+        /*Intent intent = getIntent();
         if (intent != null) {
             String userData = intent.getStringExtra("user");
             Log.d("User *****************************************************************", "" + userData);
             try {
                 userJson = new JSONObject(userData);
             } catch (Throwable t) {
-                Log.e("USER DATA ERROR", "Could not parse malformed JSON: \"" + json + "\"");
+                Log.e("USER DATA ERROR", "Could not parse malformed JSON");
             }
-        }
+        }*/
     }
-
     public void init(){
         Button btnList=findViewById(R.id.btnImage);
         btnList.setOnClickListener(new View.OnClickListener() {
@@ -86,8 +85,6 @@ public class Home extends AppCompatActivity {
             settingsItem.setVisible(false);
             searchItem.setVisible(false);
         }
-
-
         return true;
     }
     public boolean onOptionsItemSelected(MenuItem item) {

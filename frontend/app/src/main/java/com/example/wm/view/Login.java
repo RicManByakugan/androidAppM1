@@ -9,6 +9,7 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -18,14 +19,34 @@ import com.example.wm.R;
 import com.example.wm.controller.user.ControllerUser;
 import com.example.wm.tools.Serializer;
 
+import org.json.JSONObject;
+
 public class Login extends AppCompatActivity {
     Button button;
     ControllerUser a = new ControllerUser();
+
+    JSONObject userJson;
+
+    private ControllerUser controllerUser = new ControllerUser();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        VerificateUserStatus();
         LabelBottom();
+        UserLogActivity();
+    }
+
+    private void VerificateUserStatus(){
+        controllerUser.Status(new ControllerUser.StatusCallBack() {
+            @Override
+            public void onStatusResult(String userData) {
+                Log.d("DATA USER STATUS*********************************************", "" + userData);
+            }
+        });
+    }
+
+    private void UserLogActivity(){
         button = (Button) findViewById(R.id.btnSign);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,7 +63,12 @@ public class Login extends AppCompatActivity {
                         if (isConnected) {
                             Toast.makeText(Login.this, "Connexion successfully", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(Login.this, Home.class);
-                            intent.putExtra("user", dataUser);
+                            /*intent.putExtra("user", dataUser);
+                            try {
+                                userJson = new JSONObject(dataUser);
+                            }catch (Exception e){
+                                Log.d("ERROR", "" + e.toString());
+                            }*/
                             // STOCK USER INFORMATION
                             // Serializer.serialize("dataUser", dataUser, Login.this);
                             startActivity(intent);
@@ -54,10 +80,6 @@ public class Login extends AppCompatActivity {
 
             }
         });
-
-
-
-
     }
     private void LabelBottom(){
         TextView label = findViewById(R.id.loglbl);

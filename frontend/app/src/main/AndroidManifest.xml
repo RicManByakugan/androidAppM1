@@ -24,7 +24,6 @@
             android:label="WelcomeMada" />
         <activity
             android:name=".view.Home"
-            android:exported="false"
             android:label="WelcomeMada" />
         <activity
             android:name=".view.Detail"

@@ -83,4 +83,30 @@ public class ControllerUser {
             }
         });
     }
+
+    public interface StatusCallBack {
+        void onStatusResult(String userData);
+    }
+
+    public void Status(ControllerUser.StatusCallBack callBack){
+        Call<YourResponseModel> call = RetrofitClient.getApiService().getUser();
+        call.enqueue(new Callback<YourResponseModel>() {
+            @Override
+            public void onResponse(Call<YourResponseModel> call, Response<YourResponseModel> response) {
+                if (response.isSuccessful()){
+                    Log.d("O", "O");
+                    //callBack.onStatusResult(new Gson().toJson(response.body()).toString());
+                }else {
+                    Log.d("Erreur", "Erreur One");
+                }
+            }
+            @Override
+            public void onFailure(Call<YourResponseModel> call, Throwable t) {
+                Log.d("Erreur", "Erreur" + t.getMessage());
+            }
+        });
+    }
+
+
+
 }
