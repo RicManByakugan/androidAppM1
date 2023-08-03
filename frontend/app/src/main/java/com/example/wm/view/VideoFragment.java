@@ -19,13 +19,13 @@ import com.example.wm.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MessageFragment extends Fragment {
+public class VideoFragment extends Fragment {
 
     // ...
 
     private List<String> messagesList = new ArrayList<>();
     private MessageAdapter adapter;
-    private MessageDetailFragment currentDetailFragment;
+    private VideoDetailFragment currentDetailFragment;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -106,15 +106,15 @@ public class MessageFragment extends Fragment {
                     String selectedMessage = messages.get(position);
                     // Check if the MessageDetailFragment already exists in the back stack
                     FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-                    MessageDetailFragment messageDetailFragment = (MessageDetailFragment) fragmentManager.findFragmentByTag("MessageDetailFragment");
+                    VideoDetailFragment videoDetailFragment = (VideoDetailFragment) fragmentManager.findFragmentByTag("MessageDetailFragment");
 
-                    if (messageDetailFragment == null) {
+                    if (videoDetailFragment == null) {
                         // If it doesn't exist, add the MessageDetailFragment to the back stack
-                        currentDetailFragment = MessageDetailFragment.newInstance(selectedMessage);
+                        currentDetailFragment = VideoDetailFragment.newInstance(selectedMessage);
                         replaceFragmentWithBackStack(currentDetailFragment, "MessageDetailFragment");
                     } else {
                         // If it exists, show the existing fragment (remove the updateMessage() call)
-                        currentDetailFragment = messageDetailFragment;
+                        currentDetailFragment = videoDetailFragment;
                         showFragmentWithoutAddingToBackStack(currentDetailFragment);
                     }
                 }

@@ -11,28 +11,28 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/btnList"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/button_list"
-            style="@style/BorderlessButton" />
-
-        <Button
-            android:id="@+id/btnMessage"
+            android:id="@+id/btnImage"
             style="@style/BorderlessButton"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/button_message" />
+            android:text="Image" />
 
         <Button
-            android:id="@+id/btnNotification"
+            android:id="@+id/btnVideo"
+            style="@style/BorderlessButton"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/button_notification"
-            style="@style/BorderlessButton" />
+            android:text="Video" />
+
+        <Button
+            android:id="@+id/btnNotification"
+            style="@style/BorderlessButton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Notification" />
 
     </LinearLayout>
 

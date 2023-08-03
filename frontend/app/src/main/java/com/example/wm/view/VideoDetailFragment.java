@@ -13,15 +13,15 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.wm.R;
 
-public class MessageDetailFragment extends Fragment {
+public class VideoDetailFragment extends Fragment {
     private TextView textViewDetailMessage;
 
-    public MessageDetailFragment() {
+    public VideoDetailFragment() {
         // Required empty public constructor
     }
 
-    public static MessageDetailFragment newInstance(String selectedMessage) {
-        MessageDetailFragment fragment = new MessageDetailFragment();
+    public static VideoDetailFragment newInstance(String selectedMessage) {
+        VideoDetailFragment fragment = new VideoDetailFragment();
         Bundle args = new Bundle();
         args.putString("selected_message", selectedMessage);
         fragment.setArguments(args);

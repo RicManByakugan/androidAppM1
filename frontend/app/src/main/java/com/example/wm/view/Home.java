@@ -20,7 +20,6 @@ public class Home extends AppCompatActivity {
     private boolean isSearchActive = false;
     private boolean isSettingsActive = false;
     private Class<? extends Fragment> lastFragmentClass = ListFragment.class;
-
     private ControllerPost controllerPost = new ControllerPost();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +36,7 @@ public class Home extends AppCompatActivity {
     }
 
     public void init(){
-        Button btnList=findViewById(R.id.btnList);
+        Button btnList=findViewById(R.id.btnImage);
         btnList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -46,12 +45,12 @@ public class Home extends AppCompatActivity {
             }
         });
 
-        Button btnPreference=findViewById(R.id.btnMessage);
+        Button btnPreference=findViewById(R.id.btnVideo);
         btnPreference.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FragmentManager fragmentManager= getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.fragmentContainerView, MessageFragment.class,null).setReorderingAllowed(true).addToBackStack("name").commit();
+                fragmentManager.beginTransaction().replace(R.id.fragmentContainerView, VideoFragment.class,null).setReorderingAllowed(true).addToBackStack("name").commit();
             }
         });
 
@@ -92,8 +91,8 @@ public class Home extends AppCompatActivity {
                 isSearchActive = true;
 
                 // Hide the other layouts (btnList, btnPreference, btnNotification, fragmentContainerView)
-                findViewById(R.id.btnList).setVisibility(View.GONE);
-                findViewById(R.id.btnMessage).setVisibility(View.GONE);
+                findViewById(R.id.btnImage).setVisibility(View.GONE);
+                findViewById(R.id.btnVideo).setVisibility(View.GONE);
                 findViewById(R.id.btnNotification).setVisibility(View.GONE);
                 findViewById(R.id.fragmentContainerView).setVisibility(View.GONE);
                 findViewById(R.id.action_settings).setVisibility(View.GONE);
@@ -114,8 +113,8 @@ public class Home extends AppCompatActivity {
                         ? fragmentManager1.getFragments().get(0).getClass()
                         : null;
                 fragmentManager1.beginTransaction().replace(R.id.fragmentContainerView, new SettingsFragment()).addToBackStack(null).commit();
-                findViewById(R.id.btnList).setVisibility(View.GONE);
-                findViewById(R.id.btnMessage).setVisibility(View.GONE);
+                findViewById(R.id.btnImage).setVisibility(View.GONE);
+                findViewById(R.id.btnVideo).setVisibility(View.GONE);
                 findViewById(R.id.btnNotification).setVisibility(View.GONE);
                 findViewById(R.id.action_search).setVisibility(View.GONE);
                 isSettingsActive=true;
@@ -133,8 +132,8 @@ public class Home extends AppCompatActivity {
 
         if (isSearchActive) {
             // Show the other layouts (btnList, btnPreference, btnNotification, fragmentContainerView)
-            findViewById(R.id.btnList).setVisibility(View.VISIBLE);
-            findViewById(R.id.btnMessage).setVisibility(View.VISIBLE);
+            findViewById(R.id.btnImage).setVisibility(View.VISIBLE);
+            findViewById(R.id.btnVideo).setVisibility(View.VISIBLE);
             findViewById(R.id.btnNotification).setVisibility(View.VISIBLE);
             findViewById(R.id.fragmentContainerView).setVisibility(View.VISIBLE);
 
@@ -147,8 +146,8 @@ public class Home extends AppCompatActivity {
         } else {
             // Check if the SettingsFragment is currently displayed
             FragmentManager fragmentManager = getSupportFragmentManager();
-            findViewById(R.id.btnList).setVisibility(View.VISIBLE);
-            findViewById(R.id.btnMessage).setVisibility(View.VISIBLE);
+            findViewById(R.id.btnImage).setVisibility(View.VISIBLE);
+            findViewById(R.id.btnVideo).setVisibility(View.VISIBLE);
             findViewById(R.id.btnNotification).setVisibility(View.VISIBLE);
             findViewById(R.id.fragmentContainerView).setVisibility(View.VISIBLE);
             isSettingsActive=false;
