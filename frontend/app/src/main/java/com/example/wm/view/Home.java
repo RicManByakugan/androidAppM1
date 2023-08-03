@@ -50,7 +50,7 @@ public class Home extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 FragmentManager fragmentManager= getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.fragmentContainerView, VideoFragment.class,null).setReorderingAllowed(true).addToBackStack("name").commit();
+                fragmentManager.beginTransaction().replace(R.id.fragmentContainerView, ListVideoFragement.class,null).setReorderingAllowed(true).addToBackStack("name").commit();
             }
         });
 

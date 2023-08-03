@@ -4,11 +4,21 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.example.wm.R;
+import com.example.wm.controller.post.ControllerPost;
+import com.example.wm.model.Post;
+import com.example.wm.model.PostAdapter;
+import com.example.wm.model.PostAdapterVideo;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,6 +36,10 @@ public class ListVideoFragement extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    private ControllerPost controllerPost = new ControllerPost();
+    private List<Post> postList;
+    private PostAdapterVideo postAdapter;
+    private ListView listViewPostVideo;
     public ListVideoFragement() {
         // Required empty public constructor
     }
@@ -57,10 +71,38 @@ public class ListVideoFragement extends Fragment {
         }
     }
 
+    private void showPostVideo(){
+        controllerPost.GetAllPostVideo(new ControllerPost.GetAllPostVideoCallback() {
+            @Override
+            public void onPostsReceived(List<Post> postList) {
+                //ArrayAdapter<Post> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.list_item_postVideo, postList);
+                postAdapter = new PostAdapterVideo(getActivity(), postList);
+                listViewPostVideo.setAdapter(postAdapter);
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                // Handle the error case
+                Log.d("ALL POST", errorMessage);
+
+                // Pass an empty list to the adapter to trigger the error view
+                postAdapter = new PostAdapterVideo(getActivity(), new ArrayList<>());
+                listViewPostVideo.setAdapter(postAdapter);
+            }
+        });
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_list_video_fragement, container, false);
+        View view = inflater.inflate(R.layout.fragment_list_video_fragement, container, false);
+
+        listViewPostVideo = view.findViewById(R.id.listViewPostVideo);
+
+        postAdapter = new PostAdapterVideo(getActivity(), new ArrayList<>());
+        listViewPostVideo.setAdapter(postAdapter);
+
+        showPostVideo();
+
+        return view;
     }
 }
