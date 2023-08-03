@@ -1,10 +1,19 @@
 package com.example.wm.view;
 
+import android.app.DownloadManager;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,7 +23,9 @@ import com.bumptech.glide.Glide;
 
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class Detail extends AppCompatActivity {
@@ -25,6 +36,7 @@ public class Detail extends AppCompatActivity {
     private TextView textView;
     private TextView textViewDesc;
     private TextView textViewDateL;
+    private Button downloadButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,8 +46,9 @@ public class Detail extends AppCompatActivity {
         getInitPost(postTitle);
     }
 
+
     private void initWidget(){
-        imageViewPost = (ImageView) findViewById(R.id.videoUrl);
+        imageViewPost = (ImageView) findViewById(R.id.imageUrl);
         textView = (TextView) findViewById(R.id.titlePost);
         textViewDesc = (TextView) findViewById(R.id.textDescription);
         textViewDateL = (TextView) findViewById(R.id.textDate);
@@ -53,8 +66,32 @@ public class Detail extends AppCompatActivity {
             Log.d("ERROR","ERROR ");
         }
 
+        downloadButton = findViewById(R.id.btnDownload);
+        downloadButton.setOnClickListener(view -> {
+            try {
+                downloadImage(obj.getString("image_url"));
+            }catch (Exception e){
+                Log.d("Erreur" , "" + e.toString());
+            }
+        });
     }
 
+    private void downloadImage(String imageUrl) {
+        // Créez une demande de téléchargement à l'aide de DownloadManager
+        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(imageUrl));
+        request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE);
+        request.setTitle("Image uploading");
+        request.setDescription("Downloading ...");
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "WM.jpg");
+
+        DownloadManager downloadManager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
+
+        if (downloadManager != null) {
+            downloadManager.enqueue(request);
+            Toast.makeText(this, "Download image ...", Toast.LENGTH_SHORT).show();
+        }
+    }
     private void getInitPost(String id){
         controllerPost.GetPost(id, new ControllerPost.GetPostCallBack() {
             @Override
@@ -74,7 +111,6 @@ public class Detail extends AppCompatActivity {
             }
         });
     }
-
     public static Drawable LoadImageFromWebOperations(String url) {
         try {
             InputStream is = (InputStream) new URL(url).getContent();
@@ -84,4 +120,6 @@ public class Detail extends AppCompatActivity {
             return null;
         }
     }
+
+
 }

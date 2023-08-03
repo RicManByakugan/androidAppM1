@@ -2,12 +2,17 @@ package com.example.wm.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DownloadManager;
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
@@ -24,15 +29,16 @@ public class DetailVideo extends AppCompatActivity {
     private TextView textView;
     private TextView textViewDesc;
     private TextView textViewDateL;
+
+    private Button downloadBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_video);
 
-        String postId = getIntent().getStringExtra("postID");
-        getInitPost(postId);
+        //String postId = getIntent().getStringExtra("postID");
+        getInitPost("64cb6e7913c4bbb743894836");
     }
-
     private void initWidget(){
         videoViewPost = (VideoView) findViewById(R.id.videoView);
         textView = (TextView) findViewById(R.id.titlePost);
@@ -42,9 +48,7 @@ public class DetailVideo extends AppCompatActivity {
         try {
             textView.setText(obj.getString("title"));
             textViewDesc.setText(obj.getString("datePost") + " | " + obj.getString("Lieu"));
-
             try {
-
                 // Set the video URL and start playing
                 Uri videoUri = Uri.parse(obj.getString("video_url"));
                 videoViewPost.setVideoURI(videoUri);
@@ -61,8 +65,15 @@ public class DetailVideo extends AppCompatActivity {
             Log.d("ERROR","ERROR ");
         }
 
+        downloadBtn = findViewById(R.id.btnDownload);
+        downloadBtn.setOnClickListener(view -> {
+            try {
+                downloadVideo(obj.getString("video_url"));
+            }catch (Exception e){
+                Log.d("Erreur" , "" + e.toString());
+            }
+        });
     }
-
     private void getInitPost(String id){
         controllerPost.GetPostVideo(id, new ControllerPost.GetPostVideoCallBack() {
             @Override
@@ -83,4 +94,20 @@ public class DetailVideo extends AppCompatActivity {
         });
     }
 
+    private void downloadVideo(String videoUrl) {
+        // Créez une demande de téléchargement à l'aide de DownloadManager
+        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(videoUrl));
+        request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE);
+        request.setTitle("Video uploading");
+        request.setDescription("Downloading ...");
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "WM.mp4");
+
+        DownloadManager downloadManager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
+
+        if (downloadManager != null) {
+            downloadManager.enqueue(request);
+            Toast.makeText(this, "Download video ...", Toast.LENGTH_SHORT).show();
+        }
+    }
 }
