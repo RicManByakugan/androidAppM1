@@ -16,6 +16,28 @@ async function addpost(req, res) {
     }
 }
 
+async function getallpostVideo(req, res) {
+    try {
+        await connexion.connect();
+        await controllerPost.GetAllPostVideo(connexion, req, res)
+    } catch (e) {
+        console.log(e);
+    } finally {
+        await connexion.close();
+    }
+}
+
+async function getpostVdeo(req, res) {
+    try {
+        await connexion.connect();
+        await controllerPost.GetPostIDVideo(connexion, req, res)
+    } catch (e) {
+        console.log(e);
+    } finally {
+        await connexion.close();
+    }
+}
+
 async function getallpost(req, res) {
     try {
         await connexion.connect();
@@ -52,6 +74,8 @@ async function getsearch(req, res) {
 
 
 
+exports.getallpostVideo = getallpostVideo
+exports.getpostVideo = getpostVideo
 exports.getallpost = getallpost
 exports.getpost = getpost
 exports.getsearch = getsearch
