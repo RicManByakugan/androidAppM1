@@ -15,9 +15,6 @@
         android:theme="@style/Theme.AppCompat"
         tools:targetApi="28">
         <activity
-            android:name=".DetailVideo"
-            android:exported="false" />
-        <activity
             android:name=".view.Sign"
             android:exported="false"
             android:label="WelcomeMada" />
@@ -31,6 +28,9 @@
             android:label="WelcomeMada" />
         <activity
             android:name=".view.Detail"
+            android:label="WelcomeMada"></activity>
+        <activity
+            android:name=".view.DetailVideo"
             android:label="WelcomeMada"></activity>
         <activity
             android:name=".SplashActivity"
