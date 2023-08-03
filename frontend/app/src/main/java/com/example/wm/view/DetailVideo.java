@@ -29,13 +29,12 @@ public class DetailVideo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_video);
 
-        //String postTitle = getIntent().getStringExtra("postID");
-
-        getInitPost("64cb6e7913c4bbb743894836");
+        String postId = getIntent().getStringExtra("postID");
+        getInitPost(postId);
     }
 
     private void initWidget(){
-        videoViewPost = (VideoView) findViewById(R.id.videoUrl);
+        videoViewPost = (VideoView) findViewById(R.id.videoView);
         textView = (TextView) findViewById(R.id.titlePost);
         textViewDesc = (TextView) findViewById(R.id.textDescription);
         textViewDateL = (TextView) findViewById(R.id.textDate);
@@ -44,17 +43,20 @@ public class DetailVideo extends AppCompatActivity {
             textView.setText(obj.getString("title"));
             textViewDesc.setText(obj.getString("datePost") + " | " + obj.getString("Lieu"));
 
-            /*Glide.with(this)
-                    .load(obj.getString("video_url"))
-                    .placeholder(R.drawable.red_placeholder_image) // Placeholder image while loading (if needed)
-                    .error(R.drawable.error) // Image to display in case of error (if needed)
-                    .into(imageViewPost);*/
+            try {
 
-            Uri videoUri = Uri.parse(obj.getString("video_url"));
+                // Set the video URL and start playing
+                Uri videoUri = Uri.parse(obj.getString("video_url"));
+                videoViewPost.setVideoURI(videoUri);
+                videoViewPost.start();
 
-            MediaController mediaController = new MediaController(this);
-            videoViewPost.setMediaController(mediaController);
-
+                // Create a MediaController to enable video controls (play, pause, seek)
+                MediaController mediaController = new MediaController(this);
+                mediaController.setAnchorView(videoViewPost);
+                videoViewPost.setMediaController(mediaController);
+            }catch (Exception e){
+                Log.d("ERROR", "VIDEO ERROR" + e.toString());
+            }
         }catch (Exception e){
             Log.d("ERROR","ERROR ");
         }
