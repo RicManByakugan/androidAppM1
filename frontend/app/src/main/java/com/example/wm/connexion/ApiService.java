@@ -65,6 +65,12 @@ public interface ApiService {
     Call<Post> getOnePost(@Path("id") String id);
 
 
+    @GET("/video/")
+
+    Call<List<Post>> getAllPostsVideo();
+
+    @GET("/video/{id}")
+    Call<Post> getOnePostVideo(@Path("id") String id);
 
     @FormUrlEncoded
     @POST("/post/search")

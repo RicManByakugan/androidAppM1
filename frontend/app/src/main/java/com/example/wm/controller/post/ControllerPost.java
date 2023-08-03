@@ -79,4 +79,66 @@ public class ControllerPost {
         });
 
     }
+
+    public interface GetPostVideoCallBack{
+        void onGetPostVideoResult(String data);
+        void onError(String errorMessage);
+    }
+    public void GetPostVideo(String _id, ControllerPost.GetPostVideoCallBack callback) {
+        Call<Post> call = RetrofitClient.getApiService().getOnePostVideo(_id);
+
+        call.enqueue(new Callback<Post>() {
+            @Override
+            public void onResponse(Call<Post> call, Response<Post> response) {
+                if (response.isSuccessful()){
+                    Post postlist = response.body();
+                    if (postlist != null){
+                        String jsonResponse = new Gson().toJson(postlist);
+                        //Log.d("ONE POST", "JSON Response: " + jsonResponse);
+                        callback.onGetPostResult(jsonResponse);
+                    }else{
+                        callback.onError("DATA EMPTY");
+                        //Log.d("ONE POST", "DATA EMPTY********************************************");
+                    }
+                }else{
+                    callback.onError("ERROR ");
+                    //Log.d("ONE POST", "ERROR FETCH DATA");
+                }
+            }
+            @Override
+            public void onFailure(Call<Post> call, Throwable t) {
+                callback.onError("ERROR ");
+                //Log.d("ONE POST", "ERROR CONNEXION");
+            }
+        });
+
+    }
+
+    public interface GetAllPostVideoCallback {
+        void onPostsReceived(List<Post> postList);
+        void onError(String errorMessage);
+    }
+    public void GetAllPostVideo(GetAllPostVideoCallbackCallback callback) {
+        Call<List<Post>> call = RetrofitClient.getApiService().getAllPostsVideo();
+        call.enqueue(new Callback<List<Post>>() {
+            @Override
+            public void onResponse(Call<List<Post>> call, Response<List<Post>> response) {
+                if (response.isSuccessful()) {
+                    List<Post> postList = response.body();
+                    if (postList != null) {
+                        callback.onPostsReceived(postList); // Pass the list of posts to the callback
+                    } else {
+                        callback.onError("DATA EMPTY");
+                    }
+                } else {
+                    callback.onError("ERROR FETCH DATA");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Post>> call, Throwable t) {
+                callback.onError(t.getMessage());
+            }
+        });
+    }
 }
