@@ -27,7 +27,7 @@ async function getallpostVideo(req, res) {
     }
 }
 
-async function getpostVdeo(req, res) {
+async function getpostVideo(req, res) {
     try {
         await connexion.connect();
         await controllerPost.GetPostIDVideo(connexion, req, res)
