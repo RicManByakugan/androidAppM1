@@ -98,7 +98,7 @@ async function start(port, routeUser, routePost) {
     // --------------------------------------------------------------------------------
 
     // GET ALL POST VIDEO
-    app.get("/post/video", routePost.getallpostVideo)
+    app.get("/post/video/", routePost.getallpostVideo)
     // --------------------------------------------------------------------------------
 
     // --------------------------------------------------------------------------------
