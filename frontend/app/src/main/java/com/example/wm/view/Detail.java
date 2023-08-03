@@ -37,6 +37,8 @@ public class Detail extends AppCompatActivity {
     private TextView textViewDesc;
     private TextView textViewDateL;
     private Button downloadButton;
+
+    private Button favoriteButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,6 +75,11 @@ public class Detail extends AppCompatActivity {
             }catch (Exception e){
                 Log.d("Erreur" , "" + e.toString());
             }
+        });
+
+        favoriteButton = findViewById(R.id.btnFavorite);
+        favoriteButton.setOnClickListener(view -> {
+           Log.d("USER FAVORITE", "I LOVE THISSSSSSSSSSSSSS PICCCCCCCCCCCCCCCCCCC");
         });
     }
 

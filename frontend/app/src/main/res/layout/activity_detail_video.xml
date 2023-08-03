@@ -77,18 +77,19 @@
                 android:orientation="horizontal">
 
                 <Button
+                    android:id="@+id/btnFavorite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Favorite" />
+
+                <Button
                     android:id="@+id/btnDownload"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Download" />
 
-                <Button
-                    android:id="@+id/button3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Share" />
             </LinearLayout>
 
         </LinearLayout>
