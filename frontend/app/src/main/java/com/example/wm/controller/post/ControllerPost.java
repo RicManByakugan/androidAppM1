@@ -95,7 +95,7 @@ public class ControllerPost {
                     if (postlist != null){
                         String jsonResponse = new Gson().toJson(postlist);
                         //Log.d("ONE POST", "JSON Response: " + jsonResponse);
-                        callback.onGetPostResult(jsonResponse);
+                        callback.onGetPostVideoResult(jsonResponse);
                     }else{
                         callback.onError("DATA EMPTY");
                         //Log.d("ONE POST", "DATA EMPTY********************************************");
@@ -118,7 +118,7 @@ public class ControllerPost {
         void onPostsReceived(List<Post> postList);
         void onError(String errorMessage);
     }
-    public void GetAllPostVideo(GetAllPostVideoCallbackCallback callback) {
+    public void GetAllPostVideo(GetAllPostVideoCallback callback) {
         Call<List<Post>> call = RetrofitClient.getApiService().getAllPostsVideo();
         call.enqueue(new Callback<List<Post>>() {
             @Override
