@@ -16,11 +16,15 @@ import com.example.wm.R;
 
 import com.example.wm.controller.post.ControllerPost;
 
+import org.json.JSONObject;
+
 public class Home extends AppCompatActivity {
     private boolean isSearchActive = false;
     private boolean isSettingsActive = false;
     private Class<? extends Fragment> lastFragmentClass = ListFragment.class;
     private ControllerPost controllerPost = new ControllerPost();
+
+    private JSONObject userJson;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,9 +34,13 @@ public class Home extends AppCompatActivity {
         Intent intent = getIntent();
         if (intent != null) {
             String userData = intent.getStringExtra("user");
-            Log.d("User", "" + userData);
+            Log.d("User *****************************************************************", "" + userData);
+            try {
+                userJson = new JSONObject(userData);
+            } catch (Throwable t) {
+                Log.e("USER DATA ERROR", "Could not parse malformed JSON: \"" + json + "\"");
+            }
         }
-
     }
 
     public void init(){

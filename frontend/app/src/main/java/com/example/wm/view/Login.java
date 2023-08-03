@@ -59,7 +59,6 @@ public class Login extends AppCompatActivity {
 
 
     }
-
     private void LabelBottom(){
         TextView label = findViewById(R.id.loglbl);
         SpannableString ss = new SpannableString(label.getText().toString());

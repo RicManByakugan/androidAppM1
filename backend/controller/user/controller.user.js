@@ -149,7 +149,7 @@ async function LoginUser(clientConnex, req, res) {
                     if (resultat.logname === req.body.logName && resultat.password === hashPassword) {
                         req.session.clientId = resultat._id
                         this.session = resultat._id
-                        res.send({ message: "LOGIN SUCCESSFULLY" })
+                        res.send({ message: "LOGIN SUCCESSFULLY", user:  resultat})
                     } else {
                         res.send({ message: "LOGIN FAILED", detailled: "LOGIN NAME INVALID" })
                     }
