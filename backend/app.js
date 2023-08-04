@@ -106,7 +106,7 @@ async function start(port, routeUser, routePost) {
     // --------------------------------------------------------------------------------
     // POST REQUEST
     // ADD SOME POST : param : cleSearch
-    app.post("/post/search", routePost.getsearch)
+    app.post("/post/search/", routePost.getsearch)
     // --------------------------------------------------------------------------------
 
     // --------------------------------------------------------------------------------
