@@ -11,4 +11,15 @@
     <color name="splashBackground">#FFFFFFFF</color>
     <color name="button_text_color">#000000</color>
     <color name="button_background_color">#FF03DAC5</color>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="textColorPrimary">#000000</color>
+    <color name="textColorSecondary">#666666</color>
+    <color name="textColorPrimaryDark">#FFFFFF</color>
+    <color name="textColorPrimaryLight">#000000</color>
+    <color name="textColorSecondaryDark">#CCCCCC</color>
+    <color name="textColorSecondaryLight">#999999</color>
+    <!-- Add more color resources as needed -->
+    <!-- Add more color resources as needed -->
 </resources>

@@ -10,4 +10,12 @@
         <item>dark</item>
         <item>auto</item>
     </string-array>
+    <string-array name="disconnect_options">
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
+    <string-array name="disconnect_values">
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
 </resources>

@@ -6,6 +6,8 @@ import com.example.wm.connexion.RetrofitClient;
 import com.example.wm.model.YourResponseModel;
 import com.google.gson.Gson;
 
+import java.net.SocketTimeoutException;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -43,8 +45,16 @@ public class ControllerUser {
             @Override
             public void onFailure(Call<YourResponseModel> call, Throwable t) {
                 // Network request failed or other exceptions occurred
-                callback.onUserConnectResult(false, new Gson().toJson(""));
-                Log.e("MainActivity", "Network request failed", t);
+                if (t instanceof SocketTimeoutException) {
+                    // Handle socket timeout exception
+                    callback.onUserConnectResult(false, new Gson().toJson(""));
+                    Log.e("MainActivity", "Socket request failed", t);
+                } else {
+                    // Handle other exceptions
+                    callback.onUserConnectResult(false, new Gson().toJson(""));
+                    Log.e("MainActivity", "Network request failed", t);
+                }
+
             }
         });
     }
@@ -107,6 +117,38 @@ public class ControllerUser {
         });
     }
 
+    public interface UserLogoutCallback {
+        void onUserLogoutResult(boolean isConnected);
+    }
+    public void userLogout( ControllerUser.UserLogoutCallback callback) {
+        Call<YourResponseModel> call = RetrofitClient.getApiService().logoutUser();
+        call.enqueue(new Callback<YourResponseModel>() {
+            @Override
+            public void onResponse(Call<YourResponseModel> call, Response<YourResponseModel> response) {
+                if (response.isSuccessful()) {
+                    YourResponseModel responseData = response.body();
+                    if (responseData.message.compareTo("LOGOUT SUCCESSFULLY") == 0) {
+                        callback.onUserLogoutResult(true);
+                        Log.d("MainActivity", "The response is: " + responseData.message);
+                    } else {
+                        callback.onUserLogoutResult(false);
+                        Log.d("MainActivity", "Response body is error: " + responseData.message);
+                    }
+                } else {
+                    // Request failed (you can handle different HTTP error codes here)
+                    callback.onUserLogoutResult(false);
+                    Log.e("MainActivity", "Request failed. HTTP code: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<YourResponseModel> call, Throwable t) {
+                // Network request failed or other exceptions occurred
+                callback.onUserLogoutResult(false);
+                Log.e("MainActivity", "Network request failed", t);
+            }
+        });
+    }
 
 
 }
