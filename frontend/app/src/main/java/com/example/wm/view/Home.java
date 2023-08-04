@@ -8,7 +8,10 @@ import android.view.View;
 import android.widget.Button;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
+import android.widget.ListView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.preference.PreferenceManager;
 import androidx.preference.PreferenceScreen;
 
@@ -20,14 +23,18 @@ import com.example.wm.R;
 
 import com.example.wm.controller.post.ControllerPost;
 import com.example.wm.controller.user.ControllerUser;
+import com.example.wm.model.Post;
+import com.example.wm.model.PostAdapter;
 
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Home extends AppCompatActivity {
     private boolean isSearchActive = false;
     private boolean isSettingsActive = false;
     private Class<? extends Fragment> lastFragmentClass = ListFragment.class;
-    private ControllerPost controllerPost = new ControllerPost();
 
     private JSONObject userJson;
     @Override
@@ -35,16 +42,7 @@ public class Home extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         init();
-        /*Intent intent = getIntent();
-        if (intent != null) {
-            String userData = intent.getStringExtra("user");
-            Log.d("User *****************************************************************", "" + userData);
-            try {
-                userJson = new JSONObject(userData);
-            } catch (Throwable t) {
-                Log.e("USER DATA ERROR", "Could not parse malformed JSON");
-            }
-        }*/
+
     }
     private void setAppTheme() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -106,61 +104,85 @@ public class Home extends AppCompatActivity {
         }
         return true;
     }
+
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_search:
                 // Handle search icon click here
 
-                // Set the search active flag to true
-                isSearchActive = true;
-
-                // Hide the other layouts (btnList, btnPreference, btnNotification, fragmentContainerView)
-                findViewById(R.id.btnImage).setVisibility(View.GONE);
-                findViewById(R.id.btnVideo).setVisibility(View.GONE);
-                findViewById(R.id.btnNotification).setVisibility(View.GONE);
-                findViewById(R.id.fragmentContainerView).setVisibility(View.GONE);
-                findViewById(R.id.action_settings).setVisibility(View.GONE);
-                invalidateOptionsMenu();
+                // Show the SearchFragment
                 FragmentManager fragmentManager = getSupportFragmentManager();
-                lastFragmentClass = fragmentManager.getFragments().size() > 0
-                        ? fragmentManager.getFragments().get(0).getClass()
-                        : null;
+                fragmentManager.beginTransaction()
+                        .replace(R.id.fragmentContainerView, new SearchFragment())
+                        .addToBackStack(null) // Optionally add to back stack
+                        .commit();
+
+                // Hide other layouts and UI elements
+                hideUIElementsForSearch();
+
                 return true;
 
-                // Show the main layout and the Toolbar layout
             case R.id.action_settings:
                 // Handle the settings button click here
 
-                // Replace the fragmentContainerView with the SettingsFragment
+                // Show the SettingsFragment
                 FragmentManager fragmentManager1 = getSupportFragmentManager();
-                lastFragmentClass = fragmentManager1.getFragments().size() > 0
-                        ? fragmentManager1.getFragments().get(0).getClass()
-                        : null;
-                fragmentManager1.beginTransaction().replace(R.id.fragmentContainerView, new SettingsFragment()).addToBackStack(null).commit();
-                findViewById(R.id.btnImage).setVisibility(View.GONE);
-                findViewById(R.id.btnVideo).setVisibility(View.GONE);
-                findViewById(R.id.btnNotification).setVisibility(View.GONE);
-                findViewById(R.id.action_search).setVisibility(View.GONE);
-                isSettingsActive=true;
-                invalidateOptionsMenu();
-                // Set the search active flag to false
+                fragmentManager1.beginTransaction()
+                        .replace(R.id.fragmentContainerView, new SettingsFragment())
+                        .addToBackStack(null) // Optionally add to back stack
+                        .commit();
+
+                // Hide other layouts and UI elements
+                hideUIElementsForSettings();
 
                 return true;
 
             // Add other menu item handling if needed
+
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
+
+    private void hideUIElementsForSearch() {
+        findViewById(R.id.btnImage).setVisibility(View.GONE);
+        findViewById(R.id.btnVideo).setVisibility(View.GONE);
+        findViewById(R.id.btnNotification).setVisibility(View.GONE);
+        findViewById(R.id.action_settings).setVisibility(View.GONE);
+
+        // Update any other UI elements that need to be hidden
+        // ...
+    }
+
+    private void hideUIElementsForSettings() {
+        findViewById(R.id.btnImage).setVisibility(View.GONE);
+        findViewById(R.id.btnVideo).setVisibility(View.GONE);
+        findViewById(R.id.btnNotification).setVisibility(View.GONE);
+        findViewById(R.id.action_search).setVisibility(View.GONE);
+
+        // Update any other UI elements that need to be hidden
+        // ...
+    }
+    private void showUIElementsForSearch() {
+        findViewById(R.id.btnImage).setVisibility(View.VISIBLE);
+        findViewById(R.id.btnVideo).setVisibility(View.VISIBLE);
+        findViewById(R.id.btnNotification).setVisibility(View.VISIBLE);
+        findViewById(R.id.fragmentContainerView).setVisibility(View.VISIBLE);
+    }
+    private void showUIElementsForSettings() {
+        findViewById(R.id.btnImage).setVisibility(View.VISIBLE);
+        findViewById(R.id.btnVideo).setVisibility(View.VISIBLE);
+        findViewById(R.id.btnNotification).setVisibility(View.VISIBLE);
+        findViewById(R.id.fragmentContainerView).setVisibility(View.VISIBLE);
+    }
+
     public void onBackPressed() {
         // Check if the search is currently active
 
         if (isSearchActive) {
             // Show the other layouts (btnList, btnPreference, btnNotification, fragmentContainerView)
-            findViewById(R.id.btnImage).setVisibility(View.VISIBLE);
-            findViewById(R.id.btnVideo).setVisibility(View.VISIBLE);
-            findViewById(R.id.btnNotification).setVisibility(View.VISIBLE);
-            findViewById(R.id.fragmentContainerView).setVisibility(View.VISIBLE);
 
+            showUIElementsForSearch();
             // Show the search icon
             // Trigger onCreateOptionsMenu to update the toolbar menu
             invalidateOptionsMenu();
@@ -170,11 +192,8 @@ public class Home extends AppCompatActivity {
         } else {
             // Check if the SettingsFragment is currently displayed
             FragmentManager fragmentManager = getSupportFragmentManager();
-            findViewById(R.id.btnImage).setVisibility(View.VISIBLE);
-            findViewById(R.id.btnVideo).setVisibility(View.VISIBLE);
-            findViewById(R.id.btnNotification).setVisibility(View.VISIBLE);
-            findViewById(R.id.fragmentContainerView).setVisibility(View.VISIBLE);
             isSettingsActive=false;
+            showUIElementsForSettings();
             invalidateOptionsMenu();
             Fragment currentFragment = fragmentManager.findFragmentById(R.id.fragmentContainerView);
             if (currentFragment instanceof SettingsFragment) {

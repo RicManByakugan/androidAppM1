@@ -74,11 +74,11 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("/post/search")
-    Call<YourResponseModel> searchPost(@Field("cleSearch") String cleSearch);
+    Call<List<Post>> searchPost(@Field("cleSearch") String cleSearch);
 
     @FormUrlEncoded
     @POST("/post/")
-    Call<YourResponseModel> addPost(@Field("param1") String param1, @Field("param2") String param2);
+    Call<Post> addPost(@Field("param1") String param1, @Field("param2") String param2);
 
 
 }

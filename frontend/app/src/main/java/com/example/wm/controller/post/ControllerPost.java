@@ -80,6 +80,34 @@ public class ControllerPost {
 
     }
 
+    public interface searchPostCallback {
+        void onsearchPostsReceived(List<Post> postList);
+        void onError(String errorMessage);
+    }
+    public void searchPost(String cleSearch,searchPostCallback callback) {
+        Call<List<Post>> call = RetrofitClient.getApiService().searchPost(cleSearch);
+        call.enqueue(new Callback<List<Post>>() {
+            @Override
+            public void onResponse(Call<List<Post>> call, Response<List<Post>> response) {
+                if (response.isSuccessful()) {
+                    List<Post> postList = response.body();
+                    if (postList != null) {
+                        callback.onsearchPostsReceived(postList); // Pass the list of posts to the callback
+                    } else {
+                        callback.onError("DATA EMPTY");
+                    }
+                } else {
+                    callback.onError("ERROR FETCH DATA");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Post>> call, Throwable t) {
+                callback.onError(t.getMessage());
+            }
+        });
+    }
+
     public interface GetPostVideoCallBack{
         void onGetPostVideoResult(String data);
         void onError(String errorMessage);

@@ -72,7 +72,7 @@ public class ListFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
+        showPosts();
 
     }
 
@@ -114,7 +114,10 @@ public class ListFragment extends Fragment {
         listViewPosts.setAdapter(postAdapter);
 
         // Load and display the posts
-        showPosts();
+
+        if(postList==null||postList.isEmpty()){
+
+        }
 
         return view;
     }
