@@ -78,10 +78,9 @@ async function GetSearch(clientConnex, req, res) {
     if (req.body.cleSearch) {
         await clientConnex.db("WM").collection('Post').findOne({
             $or: [
-                { numero: req.body.cleSearch },
-                { modele: req.body.cleSearch },
-                { marque: req.body.cleSearch },
-                { annee: req.body.cleSearch }
+                { title: req.body.cleSearch },
+                { Lieu: req.body.cleSearch },
+                { datePost: req.body.cleSearch }
             ]
         })
             .then(resss => {
