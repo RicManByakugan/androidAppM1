@@ -76,13 +76,8 @@ async function GetPostID(clientConnex, req, res) {
 
 async function GetSearch(clientConnex, req, res) {
     if (req.body.cleSearch) {
-        await clientConnex.db("WM").collection('Post').findOne({
-            $or: [
-                { title: req.body.cleSearch.toString() },
-                { Lieu: req.body.cleSearch.toString() },
-                { datePost: req.body.cleSearch.toString() }
-            ]
-        })
+        const query = {$or: [{title: { $regex: req.body.cleSearch.toString(), $options: 'i' }}, {Lieu: { $regex: req.body.cleSearch.toString(), $options: 'i' }}]};
+        await clientConnex.db("WM").collection('Post').find(query).toArray()
             .then(resss => {
                 if (resss) {
                     res.send(resss)
