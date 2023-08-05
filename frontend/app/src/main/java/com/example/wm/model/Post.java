@@ -19,7 +19,6 @@ public class Post {
         this.title = title;
         this.datePost = datePost;
         this.Lieu = lieu;
-       
     }
 
     public String getVisite() {
