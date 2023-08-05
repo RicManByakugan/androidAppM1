@@ -23,24 +23,6 @@ async function GetAllPostVideo(clientConnex, req, res) {
         })
 }
 
-async function GetPostIDVideo(clientConnex, req, res) {
-        if (typeof req.params.id === "string"){
-            await clientConnex.db("WM").collection('PostVideo').findOne({ _id: new ObjectID(req.params.id) })
-                .then(resss => {
-                    if (resss) {
-                        res.send(resss)
-                    } else {
-                        res.send({ message: "EMPTY" })
-                    }
-                })
-                .catch(err => {
-                    res.send({ message: "REQUEST ERROR" })
-                })
-        }else{
-            res.send({ message: "REQUEST TYPE ERROR" })
-        }
-}
-
 
 async function GetAllPost(clientConnex, req, res) {
     await clientConnex.db("WM").collection('Post').find().toArray()
@@ -132,6 +114,80 @@ async function GetPostID(clientConnex, req, res) {
         }else{
             res.send({ message: "REQUEST TYPE ERROR" })
         }
+}
+
+async function GetPostIDVideo(clientConnex, req, res) {
+    if (typeof req.params.id === "string"){
+        var updateTrue = false
+        var lastFind = false
+        var resssF = {}
+        await clientConnex.db("WM").collection('PostVideo').findOne({ _id: new ObjectID(req.params.id) })
+            .then(resss => {
+                if (!resss.visite == null) {
+                    updateDoc = {
+                        $set: {
+                            visite: parseInt(resss.visite) + 1,
+                        }
+                    };
+                }else if(resss.visite <= 1 || resss.visite <= 10000000){
+                    updateDoc = {
+                        $set: { 
+                            visite: parseInt(resss.visite) + 1,
+                        }
+                    };
+                }else{
+                    updateDoc = {
+                        $set: {
+                            visite: 1,
+                        }
+                    };
+                }
+                options = { upsert: true };
+                updateTrue = true
+                resssF = resss
+            })
+            .catch(err => {
+                res.send({ message: "REQUEST ERROR" })
+            })
+        if (updateTrue) {
+            await clientConnex.db("WM").collection('PostVideo').updateOne({ _id: new ObjectID(req.params.id) }, updateDoc, options)
+                .then(resssU => {
+                    lastFind = true
+                })
+                .catch(err => {
+                    res.send({ message: "REQUEST ERROR" })
+                })
+        }
+        var nextNotifP = {}
+        var nextNotif = false
+        if (lastFind) {
+            await clientConnex.db("WM").collection('PostVideo').findOne({ _id: new ObjectID(req.params.id) })
+            .then(resF => {
+                nextNotif = true
+                nextNotifP = resF
+                res.send(resF)
+            })
+            .catch(err => {
+                res.send({ message: "REQUEST ERROR" })
+            })
+        }
+
+        if (nextNotif) {
+            NotifPostVideo = {
+                message: "POST VISITED BY ANOTHER USER ("+ nextNotifP.visite +" VIEW)",
+                postID: req.params.id,
+                typePost: "VIDEO",
+                dateNotif: new Date()
+            }
+            await clientConnex.db("WM").collection('Notification').insertOne(NotifPostVideo)
+                .then(resultat => {
+                    res.send({ message: "NOTIFICATION ADD SUCCESSFULLY" })
+                })
+                .catch(err => res.send({ message: "NOTIFICATION ADD FAILED", detailled: "INVALID INFORMATION", err: err }))
+        }
+    }else{
+        res.send({ message: "REQUEST TYPE ERROR" })
+    }
 }
 
 async function GetSearch(clientConnex, req, res) {
