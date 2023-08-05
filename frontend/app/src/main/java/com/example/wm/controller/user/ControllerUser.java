@@ -155,6 +155,7 @@ public class ControllerUser {
 
     public interface UserNotifCallBack {
         void onUserNotifResult(String data);
+        void onError(String err);
     }
 
     public void getUserNotif (ControllerUser.UserNotifCallBack callBack){
