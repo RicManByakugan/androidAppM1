@@ -169,7 +169,7 @@ public class ControllerUser {
 
             @Override
             public void onFailure(Call<Notification> call, Throwable t) {
-                callback.onError("DATA EMPTY");
+                callBack.onError("DATA EMPTY");
             }
         });
     }
