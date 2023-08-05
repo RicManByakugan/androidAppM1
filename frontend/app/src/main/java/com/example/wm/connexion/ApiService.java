@@ -28,7 +28,7 @@ public interface ApiService {
     Call<YourResponseModel> getUser();
 
     @GET("/user/notification")
-    Call<Notification> getUserNotification();
+    Call<List<Notification>> getUserNotification();
 
     @GET("/user/preference")
     Call<YourResponseModel> getUserPreference();

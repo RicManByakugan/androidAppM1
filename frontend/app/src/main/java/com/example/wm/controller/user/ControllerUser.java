@@ -3,12 +3,14 @@ package com.example.wm.controller.user;
 import android.util.Log;
 
 import com.example.wm.connexion.RetrofitClient;
+import com.example.wm.controller.post.ControllerPost;
 import com.example.wm.model.Notification;
 import com.example.wm.model.Post;
 import com.example.wm.model.YourResponseModel;
 import com.google.gson.Gson;
 
 import java.net.SocketTimeoutException;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -154,24 +156,38 @@ public class ControllerUser {
 
 
     public interface UserNotifCallBack {
+<<<<<<< Updated upstream
         void onUserNotifResult(String data);
         void onError(String err);
+=======
+        void onUserNotifResult(List<Notification> notification);
+
+        void onError(String dataEmpty);
+>>>>>>> Stashed changes
     }
 
-    public void getUserNotif (ControllerUser.UserNotifCallBack callBack){
-        Call<Notification> call = RetrofitClient.getApiService().getUserNotification();
-        call.enqueue(new Callback<Notification>() {
+    public void getUserNotif (ControllerUser.UserNotifCallBack callback){
+        Call<List<Notification>> call = RetrofitClient.getApiService().getUserNotification();
+        call.enqueue(new Callback<List<Notification>>() {
             @Override
-            public void onResponse(Call<Notification> call, Response<Notification> response) {
-                Notification datalist = response.body();
-                String jsonResponse = new Gson().toJson(datalist);
-                callBack.onUserNotifResult(jsonResponse);
+            public void onResponse(Call<List<Notification>> call, Response<List<Notification>> response) {
+                if (response.isSuccessful()) {
+                    List<Notification> notificationList = response.body();
+                    if (notificationList != null) {
+                        callback.onUserNotifResult(notificationList); // Pass the list of posts to the callback
+                    } else {
+                        callback.onError("DATA EMPTY");
+                    }
+                } else {
+                    callback.onError("ERROR FETCH DATA");
+                }
             }
 
             @Override
-            public void onFailure(Call<Notification> call, Throwable t) {
-                callBack.onError("DATA EMPTY");
+            public void onFailure(Call<List<Notification>> call, Throwable t) {
+                callback.onError("DATA EMPTY");
             }
         });
     }
+
 }
