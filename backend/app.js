@@ -6,8 +6,8 @@ const { MongoClient, ServerApiVersion } = require('mongodb');
 const app = express()
 
 async function start(port, routeUser, routePost) {
-    //const uriBd = "mongodb://127.0.0.1:27017";
-    const uriBd = "mongodb+srv://welcomemadagascar:MRkdGrGUsnSX34tQ@cluster0.6shj7xp.mongodb.net/";
+    const uriBd = "mongodb://127.0.0.1:27017";
+    //const uriBd = "mongodb+srv://welcomemadagascar:MRkdGrGUsnSX34tQ@cluster0.6shj7xp.mongodb.net/";
     const client = new MongoClient(uriBd, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
     routeUser.sendDb(client)
     routePost.sendDb(client)
@@ -41,9 +41,6 @@ async function start(port, routeUser, routePost) {
     app.get("/user/notification", routeUser.notification)
     // --------------------------------------------------------------------------------
 
-    // GET REQUEST
-    app.get("/user/notification", routeUser.notification)
-    // --------------------------------------------------------------------------------
 
     // GET REQUEST
     app.get("/user/preference", routeUser.preference)
@@ -57,7 +54,7 @@ async function start(port, routeUser, routePost) {
 
     // POST REQUEST
     // API ADD NOTIFICATION FOR USER
-    // REQUIRED INFORMATION : message, user
+    // REQUIRED INFORMATION : message, postID, typePost
     app.post("/user/notification/add", routeUser.addnotif)
     // --------------------------------------------------------------------------------
 

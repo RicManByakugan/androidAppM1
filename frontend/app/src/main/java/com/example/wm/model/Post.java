@@ -10,13 +10,24 @@ public class Post {
     private String datePost = null;
     private String Lieu = null;
 
-    public Post(String _id, String image_url, String title, String datePost, String lieu) {
+    private String visite = null;
+
+    public Post(String _id, String image_url, String title, String datePost, String lieu, String visite) {
         this._id = _id;
         this.image_url = image_url;
         this.video_url = image_url;
         this.title = title;
         this.datePost = datePost;
-        Lieu = lieu;
+        this.Lieu = lieu;
+        this.visite = visite;
+    }
+
+    public String getVisite() {
+        return visite;
+    }
+
+    public void setVisite(String visite) {
+        this.visite = visite;
     }
 
     public String getVideo_url() {

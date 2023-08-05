@@ -58,10 +58,34 @@ async function GetAllPost(clientConnex, req, res) {
 
 async function GetPostID(clientConnex, req, res) {
         if (typeof req.params.id === "string"){
+            var updateTrue = false
+            var lastFind = false
+            var resssF = {}
             await clientConnex.db("WM").collection('Post').findOne({ _id: new ObjectID(req.params.id) })
                 .then(resss => {
                     if (resss) {
-                        res.send(resss)
+                        if (!resss.visite == null) {
+                            updateDoc = {
+                                $set: {
+                                    visite: parseInt(resss.visite) + 1,
+                                }
+                            };
+                        }else if(resss.visite <= 1 || resss.visite <= 10000000){
+                            updateDoc = {
+                                $set: { 
+                                    visite: parseInt(resss.visite) + 1,
+                                }
+                            };
+                        }else{
+                            updateDoc = {
+                                $set: {
+                                    visite: 1,
+                                }
+                            };
+                        }
+                        options = { upsert: true };
+                        updateTrue = true
+                        resssF = resss
                     } else {
                         res.send({ message: "EMPTY" })
                     }
@@ -69,6 +93,26 @@ async function GetPostID(clientConnex, req, res) {
                 .catch(err => {
                     res.send({ message: "REQUEST ERROR" })
                 })
+            if (updateTrue) {
+                await clientConnex.db("WM").collection('Post').updateOne({ _id: new ObjectID(req.params.id) }, updateDoc, options)
+                    .then(resssU => {
+                        lastFind = true
+                    })
+                    .catch(err => {
+                        res.send({ message: "REQUEST ERROR" })
+                    })
+            }
+
+            if (lastFind) {
+                await clientConnex.db("WM").collection('Post').findOne({ _id: new ObjectID(req.params.id) })
+                .then(resF => {
+                    res.send(resF)
+                })
+                .catch(err => {
+                    res.send({ message: "REQUEST ERROR" })
+                })
+            }
+
         }else{
             res.send({ message: "REQUEST TYPE ERROR" })
         }

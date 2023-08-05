@@ -110,33 +110,30 @@ async function NotificationUserIDWatch(clientConnex, req, res) {
 }
 
 async function NotificationUser(clientConnex, req, res) {
-    if (this.session) {
-        var continueVar = false
-        var resUserN = {}
-        await clientConnex.db("WM").collection('User').findOne({ _id: new ObjectID(this.session) })
-            .then(resultat => {
-                continueVar = true
-                resUserN = resultat
-            })
-            .catch(err => {
-                res.send([{ message: "REQUEST ERROR" }])
-            })
-        
-        if (continueVar) {
-                await clientConnex.db("WM").collection('Notification').find({ client: resUserN }).toArray()
-                    .then(resNotif => {
-                        if (resNotif) {
-                            res.send(resNotif)
-                        } else {
-                            res.send({ message: "EMPTY" })
-                        }
-                    })
-                    .catch(err => {
-                        res.send({ message: "REQUEST ERROR" })
-                    })
+    await clientConnex.db("WM").collection('Notification').find().toArray()
+        .then(resNotif => {
+            if (resNotif) {
+                res.send(resNotif)
+            } else {
+                res.send({ message: "EMPTY" })
             }
+        })
+        .catch(err => {
+            res.send({ message: "REQUEST ERROR" })
+        })
+}
+
+
+async function AddNotificationUser(clientConnex, req, res) {
+    if (req.body.message !== undefined && req.body.postID !== undefined && req.body.typePost !== undefined) {
+        req.body.dateNotif = new Date()
+        await clientConnex.db("WM").collection('Notification').insertOne(req.body)
+            .then(resultat => {
+                res.send({ message: "NOTIFICATION ADD SUCCESSFULLY" })
+            })
+            .catch(err => res.send({ message: "NOTIFICATION ADD FAILED", detailled: "INVALID INFORMATION", err: err }))
     } else {
-        res.send([{ message: "USER NOT CONNECTED" }])
+        res.send({ message: "NOTIFICATION ADD FAILED", detailled: "INVALID INFORMATION" })
     }
 }
 
@@ -163,20 +160,6 @@ async function LoginUser(clientConnex, req, res) {
         .catch(err => {
             res.send({ message: "REQUEST ERROR" })
         })
-}
-
-async function AddNotificationUser(clientConnex, req, res) {
-    if (req.body.message !== undefined && req.body.user !== undefined) {
-        req.body.dateNotif = new Date()
-        req.body.viewUser = false
-        await clientConnex.db("WM").collection('Notification').insertOne(req.body)
-            .then(resultat => {
-                res.send({ message: "NOTIFICATION ADD SUCCESSFULLY" })
-            })
-            .catch(err => res.send({ message: "SUBSCRIBE FAILED", detailled: "INVALID INFORMATION", err: err }))
-    } else {
-        res.send({ message: "SUBSCRIBE FAILED", detailled: "INVALID INFORMATION" })
-    }
 }
 
 async function SubScribeUser(clientConnex, req, res) {
