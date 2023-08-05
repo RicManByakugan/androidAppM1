@@ -102,10 +102,13 @@ async function GetPostID(clientConnex, req, res) {
                         res.send({ message: "REQUEST ERROR" })
                     })
             }
-
+            var nextNotifP = {}
+            var nextNotif = false
             if (lastFind) {
                 await clientConnex.db("WM").collection('Post').findOne({ _id: new ObjectID(req.params.id) })
                 .then(resF => {
+                    nextNotif = true
+                    nextNotifP = resF
                     res.send(resF)
                 })
                 .catch(err => {
@@ -113,6 +116,19 @@ async function GetPostID(clientConnex, req, res) {
                 })
             }
 
+            if (nextNotif) {
+                NotifPostImage = {
+                    message: "POST VISITED BY ANOTHER USER ("+ nextNotifP.visite +" VIEW)",
+                    postID: req.params.id,
+                    typePost: "IMAGE",
+                    dateNotif: new Date()
+                }
+                await clientConnex.db("WM").collection('Notification').insertOne(NotifPostImage)
+                    .then(resultat => {
+                        res.send({ message: "NOTIFICATION ADD SUCCESSFULLY" })
+                    })
+                    .catch(err => res.send({ message: "NOTIFICATION ADD FAILED", detailled: "INVALID INFORMATION", err: err }))
+            }
         }else{
             res.send({ message: "REQUEST TYPE ERROR" })
         }
