@@ -156,14 +156,12 @@ public class ControllerUser {
 
 
     public interface UserNotifCallBack {
-<<<<<<< Updated upstream
-        void onUserNotifResult(String data);
-        void onError(String err);
-=======
+
+
         void onUserNotifResult(List<Notification> notification);
 
         void onError(String dataEmpty);
->>>>>>> Stashed changes
+
     }
 
     public void getUserNotif (ControllerUser.UserNotifCallBack callback){
