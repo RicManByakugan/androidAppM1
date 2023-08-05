@@ -3,6 +3,8 @@ package com.example.wm.controller.user;
 import android.util.Log;
 
 import com.example.wm.connexion.RetrofitClient;
+import com.example.wm.model.Notification;
+import com.example.wm.model.Post;
 import com.example.wm.model.YourResponseModel;
 import com.google.gson.Gson;
 
@@ -151,4 +153,24 @@ public class ControllerUser {
     }
 
 
+    public interface UserNotifCallBack {
+        void onUserNotifResult(String data);
+    }
+
+    public void getUserNotif (ControllerUser.UserNotifCallBack callBack){
+        Call<Notification> call = RetrofitClient.getApiService().getUserNotification();
+        call.enqueue(new Callback<Notification>() {
+            @Override
+            public void onResponse(Call<Notification> call, Response<Notification> response) {
+                Notification datalist = response.body();
+                String jsonResponse = new Gson().toJson(datalist);
+                callBack.onUserNotifResult(jsonResponse);
+            }
+
+            @Override
+            public void onFailure(Call<Notification> call, Throwable t) {
+                callback.onError("DATA EMPTY");
+            }
+        });
+    }
 }

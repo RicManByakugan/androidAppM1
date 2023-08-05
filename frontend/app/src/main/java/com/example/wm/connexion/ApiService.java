@@ -1,5 +1,6 @@
 package com.example.wm.connexion;
 
+import com.example.wm.model.Notification;
 import com.example.wm.model.Post;
 import com.example.wm.model.User;
 import com.example.wm.model.YourResponseModel;
@@ -27,7 +28,7 @@ public interface ApiService {
     Call<YourResponseModel> getUser();
 
     @GET("/user/notification")
-    Call<YourResponseModel> getUserNotification();
+    Call<Notification> getUserNotification();
 
     @GET("/user/preference")
     Call<YourResponseModel> getUserPreference();
