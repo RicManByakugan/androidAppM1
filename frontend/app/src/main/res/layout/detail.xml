@@ -30,7 +30,7 @@
 
                 <ImageView
                     android:id="@+id/imageUrl"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     tools:srcCompat="@tools:sample/backgrounds/scenic" />
             </LinearLayout>
@@ -44,8 +44,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="11dp"
-                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical">
 
                     <TextView
@@ -58,8 +57,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
                     <TextView
@@ -78,12 +76,17 @@
                         android:gravity="center|right"
                         android:textSize="15dp" />
 
+                    <TextView
+                        android:id="@+id/vueDetail"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="9dp"
-                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
                     <Button

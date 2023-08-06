@@ -2,7 +2,6 @@ package com.example.wm.model;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.wm.R;
 import com.example.wm.view.Detail;
-import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 public class PostAdapter extends ArrayAdapter<Post> {
@@ -39,10 +38,15 @@ public class PostAdapter extends ArrayAdapter<Post> {
         TextView textViewTitle = itemView.findViewById(R.id.textViewTitle);
         TextView textViewDate = itemView.findViewById(R.id.textViewDate);
         TextView textViewLieu = itemView.findViewById(R.id.textViewLieu);
+        TextView textViewVu = itemView.findViewById(R.id.textViewVu);
 
         textViewTitle.setText(currentPost.getTitle());
         textViewDate.setText(currentPost.getDatePost());
-        //textViewLieu.setText(currentPost.getLieu());
+        if (currentPost.getVisite() == null){
+            textViewVu.setText("0 VIEW");
+        }else{
+            textViewVu.setText(currentPost.getVisite() + " VIEW");
+        }
 
         // Load the image using Picasso or other image-loading libraries
         Glide.with(this.getContext())

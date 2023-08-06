@@ -15,6 +15,8 @@ import android.widget.VideoView;
 import com.example.wm.R;
 import com.example.wm.view.DetailVideo;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 public class PostAdapterVideo extends ArrayAdapter<Post> {
@@ -40,9 +42,15 @@ public class PostAdapterVideo extends ArrayAdapter<Post> {
         TextView textViewTitle = itemView.findViewById(R.id.textViewTitle);
         TextView textViewDate = itemView.findViewById(R.id.textViewDate);
         TextView textViewLieu = itemView.findViewById(R.id.textViewLieu);
+        TextView textViewV = itemView.findViewById(R.id.textViewVVide);
 
         textViewTitle.setText(currentPost.getTitle());
         textViewDate.setText(currentPost.getDatePost());
+        if (currentPost.getVisite() == null){
+            textViewV.setText("0 VIEW");
+        }else{
+            textViewV.setText(currentPost.getVisite() + " VIEW");
+        }
         //textViewLieu.setText(currentPost.getLieu());
 
         itemView.setOnClickListener(view -> {
