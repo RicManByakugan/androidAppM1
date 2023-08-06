@@ -29,6 +29,7 @@
             android:layout_height="50dp"
             android:layout_weight="1"
             android:background="#0D4A06"
+            android:backgroundTint="#0D4A06"
             android:src="@android:drawable/ic_menu_camera" />
 
         <ImageButton
