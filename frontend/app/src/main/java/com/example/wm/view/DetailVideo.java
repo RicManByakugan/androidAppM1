@@ -40,8 +40,8 @@ public class DetailVideo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_video);
 
-        //String postId = getIntent().getStringExtra("postID");
-        getInitPost("64cb6e7913c4bbb743894836");
+        String postId = getIntent().getStringExtra("postID");
+        getInitPost(postId);
     }
     private void initWidget(){
         videoViewPost = (VideoView) findViewById(R.id.videoView);
