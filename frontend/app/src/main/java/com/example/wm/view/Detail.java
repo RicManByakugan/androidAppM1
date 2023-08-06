@@ -77,10 +77,10 @@ public class Detail extends AppCompatActivity {
             }
         });
 
-        favoriteButton = findViewById(R.id.btnFavorite);
+        /*favoriteButton = findViewById(R.id.btnFavorite);
         favoriteButton.setOnClickListener(view -> {
            Log.d("USER FAVORITE", "I LOVE THISSSSSSSSSSSSSS PICCCCCCCCCCCCCCCCCCC");
-        });
+        });*/
     }
 
     private void downloadImage(String imageUrl) {

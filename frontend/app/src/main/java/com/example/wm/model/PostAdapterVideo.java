@@ -43,7 +43,7 @@ public class PostAdapterVideo extends ArrayAdapter<Post> {
 
         textViewTitle.setText(currentPost.getTitle());
         textViewDate.setText(currentPost.getDatePost());
-        textViewLieu.setText(currentPost.getLieu());
+        //textViewLieu.setText(currentPost.getLieu());
 
         itemView.setOnClickListener(view -> {
             // Create an intent to launch the Detail activity
