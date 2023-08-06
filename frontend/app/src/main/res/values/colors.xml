@@ -20,6 +20,7 @@
     <color name="textColorPrimaryLight">#000000</color>
     <color name="textColorSecondaryDark">#CCCCCC</color>
     <color name="textColorSecondaryLight">#999999</color>
+    <color name="btnC">#82F875</color>
     <!-- Add more color resources as needed -->
     <!-- Add more color resources as needed -->
 </resources>

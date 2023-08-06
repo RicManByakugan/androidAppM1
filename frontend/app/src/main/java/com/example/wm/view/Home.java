@@ -38,6 +38,9 @@ public class Home extends AppCompatActivity {
     private Class<? extends Fragment> lastFragmentClass = ListFragment.class;
 
     private JSONObject userJson;
+    private ImageButton btnList;
+    private ImageButton btnNotification;
+    private ImageButton btnPreference;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,33 +64,46 @@ public class Home extends AppCompatActivity {
         }
     }
     public void init(){
-        ImageButton btnList=findViewById(R.id.btnImage);
+        btnList = findViewById(R.id.btnImage);
+        btnPreference=findViewById(R.id.btnVideo);
+        btnNotification=findViewById(R.id.btnNotification);
+
         btnList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //ChangeColorBtn(btnList, btnPreference, btnNotification);
                 FragmentManager fragmentManager= getSupportFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.fragmentContainerView,ListFragment.class,null).setReorderingAllowed(true).addToBackStack("name").commit();
             }
         });
 
-        ImageButton btnPreference=findViewById(R.id.btnVideo);
+
         btnPreference.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //ChangeColorBtn(btnPreference, btnList, btnNotification);
                 FragmentManager fragmentManager= getSupportFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.fragmentContainerView, ListVideoFragement.class,null).setReorderingAllowed(true).addToBackStack("name").commit();
             }
         });
 
-        ImageButton btnNotification=findViewById(R.id.btnNotification);
+
         btnNotification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //ChangeColorBtn(btnNotification, btnPreference, btnPreference);
                 FragmentManager fragmentManager= getSupportFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.fragmentContainerView, NotificationFragment.class,null).setReorderingAllowed(true).addToBackStack("name").commit();
             }
         });
     }
+
+    private void ChangeColorBtn(ImageButton btnChnage, ImageButton btn2, ImageButton btn3) {
+        btnChnage.setBackgroundColor(R.color.btnC);
+        btn2.setBackgroundColor(R.color.wmtheme);
+        btn3.setBackgroundColor(R.color.wmtheme);
+    }
+
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
 
