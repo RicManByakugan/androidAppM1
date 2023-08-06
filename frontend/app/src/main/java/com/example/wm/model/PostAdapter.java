@@ -51,7 +51,7 @@ public class PostAdapter extends ArrayAdapter<Post> {
         // Load the image using Picasso or other image-loading libraries
         Glide.with(this.getContext())
                 .load(currentPost.getimage_url())
-                .placeholder(R.drawable.red_placeholder_image) // Placeholder image while loading (if needed)
+                .placeholder(R.drawable.iconimage) // Placeholder image while loading (if needed)
                 .error(R.drawable.error) // Image to display in case of error (if needed)
                 .into(imageViewPost);
 
