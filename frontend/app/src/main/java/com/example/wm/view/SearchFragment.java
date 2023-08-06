@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.example.wm.R;
 import com.example.wm.controller.post.ControllerPost;
@@ -41,10 +42,13 @@ public class SearchFragment extends Fragment {
         searchEditText = view.findViewById(R.id.editTextSearch);
 
         Button searchButton = view.findViewById(R.id.buttonSearch);
+        ProgressBar progressBar = view.findViewById(R.id.progressBarsearch);
+        progressBar.setVisibility(View.GONE);
         searchButton.setOnClickListener(v -> {
             String searchText = searchEditText.getText().toString();
             // Now you can use 'searchText' for your search operation
             performSearch(searchText);
+            progressBar.setVisibility(View.VISIBLE);
             listViewPosts.setVisibility(View.VISIBLE);
         });
 
@@ -60,6 +64,10 @@ public class SearchFragment extends Fragment {
 
                 // Set the custom adapter on the ListView associated with the ListFragment
                 listViewPosts.setAdapter(postAdapter);
+                ProgressBar progressBar = getView().findViewById(R.id.progressBarsearch);
+                if (progressBar != null) {
+                    progressBar.setVisibility(View.GONE);
+                }
             }
 
             @Override
@@ -72,6 +80,10 @@ public class SearchFragment extends Fragment {
 
                 // Set the custom adapter on the ListView associated with the ListFragment
                 listViewPosts.setAdapter(postAdapter);
+                ProgressBar progressBar = getView().findViewById(R.id.progressBarsearch);
+                if (progressBar != null) {
+                    progressBar.setVisibility(View.GONE);
+                }
             }
         });
     }

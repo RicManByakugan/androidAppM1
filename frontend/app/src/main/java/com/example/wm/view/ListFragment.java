@@ -1,5 +1,6 @@
 package com.example.wm.view;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.example.wm.R;
 import com.example.wm.controller.post.ControllerPost;
@@ -74,6 +76,8 @@ public class ListFragment extends Fragment {
         }
         showPosts();
 
+
+
     }
 
     private void showPosts() {
@@ -85,6 +89,11 @@ public class ListFragment extends Fragment {
 
                 // Set the custom adapter on the ListView associated with the ListFragment
                 listViewPosts.setAdapter(postAdapter);
+                // Hide the ProgressBar
+                ProgressBar progressBar = getView().findViewById(R.id.progressBar);
+                if (progressBar != null) {
+                    progressBar.setVisibility(View.GONE);
+                }
             }
 
             @Override
@@ -97,6 +106,11 @@ public class ListFragment extends Fragment {
 
                 // Set the custom adapter on the ListView associated with the ListFragment
                 listViewPosts.setAdapter(postAdapter);
+                // Hide the ProgressBar
+                ProgressBar progressBar = getView().findViewById(R.id.progressBar);
+                if (progressBar != null) {
+                    progressBar.setVisibility(View.GONE);
+                }
             }
         });
     }
@@ -109,6 +123,8 @@ public class ListFragment extends Fragment {
         // Find the ListView inside the inflated view
         listViewPosts = view.findViewById(R.id.listViewPosts);
 
+        ProgressBar progressBar = view.findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.VISIBLE);
         // Set an empty adapter initially to avoid a NullPointerException
         postAdapter = new PostAdapter(getActivity(), new ArrayList<>());
         listViewPosts.setAdapter(postAdapter);
