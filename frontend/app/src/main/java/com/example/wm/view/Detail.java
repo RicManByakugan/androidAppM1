@@ -47,9 +47,9 @@ public class Detail extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detail);
-        //String postTitle = getIntent().getStringExtra("postID");
-        //getInitPost(postTitle);
-        getInitPost("64c88bcb700c072f9bcc7327");
+        String postTitle = getIntent().getStringExtra("postID");
+        getInitPost(postTitle);
+        //getInitPost("64c88bcb700c072f9bcc7327");
     }
 
 
