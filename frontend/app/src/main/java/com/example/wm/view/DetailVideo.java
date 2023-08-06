@@ -4,13 +4,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DownloadManager;
 import android.content.Context;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.MediaController;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
@@ -31,6 +34,7 @@ public class DetailVideo extends AppCompatActivity {
     private TextView textViewDateL;
 
     private Button downloadBtn;
+    private ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,17 +51,23 @@ public class DetailVideo extends AppCompatActivity {
 
         try {
             textView.setText(obj.getString("title"));
-            textViewDesc.setText(obj.getString("datePost") + " | " + obj.getString("Lieu"));
+            textViewDesc.setText(obj.getString("Lieu") + " | " + obj.getString("datePost"));
+            //textViewDateL.setText(obj.getString("datePost"));
             try {
+                // Create a MediaController to enable video controls (play, pause, seek)
+                MediaController mediaController = new MediaController(this);
+                mediaController.show();
+                mediaController.setAnchorView(videoViewPost);
+                videoViewPost.setMediaController(mediaController);
+
                 // Set the video URL and start playing
                 Uri videoUri = Uri.parse(obj.getString("video_url"));
                 videoViewPost.setVideoURI(videoUri);
                 videoViewPost.start();
 
-                // Create a MediaController to enable video controls (play, pause, seek)
-                MediaController mediaController = new MediaController(this);
-                mediaController.setAnchorView(videoViewPost);
-                videoViewPost.setMediaController(mediaController);
+                progressBar = findViewById(R.id.progressBarDetailVideo);
+                progressBar.setVisibility(View.GONE);
+
             }catch (Exception e){
                 Log.d("ERROR", "VIDEO ERROR" + e.toString());
             }

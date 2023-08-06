@@ -10,8 +10,10 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,12 +41,12 @@ public class Detail extends AppCompatActivity {
     private Button downloadButton;
 
     private Button favoriteButton;
+    private ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detail);
         String postTitle = getIntent().getStringExtra("postID");
-
         getInitPost(postTitle);
     }
 
@@ -57,13 +59,15 @@ public class Detail extends AppCompatActivity {
 
         try {
             textView.setText(obj.getString("title"));
-            textViewDesc.setText(obj.getString("datePost") + " | " + obj.getString("Lieu"));
-
+            textViewDesc.setText(obj.getString("Lieu") + " | " + obj.getString("datePost"));
+            //textViewDateL.setText(obj.getString("datePost"));
             Glide.with(this)
                     .load(obj.getString("image_url"))
                     .placeholder(R.drawable.red_placeholder_image) // Placeholder image while loading (if needed)
                     .error(R.drawable.error) // Image to display in case of error (if needed)
                     .into(imageViewPost);
+            progressBar = findViewById(R.id.progressBarDetailImage);
+            progressBar.setVisibility(View.GONE);
         }catch (Exception e){
             Log.d("ERROR","ERROR ");
         }
