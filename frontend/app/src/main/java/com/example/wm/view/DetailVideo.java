@@ -32,6 +32,7 @@ public class DetailVideo extends AppCompatActivity {
     private TextView textView;
     private TextView textViewDesc;
     private TextView textViewDateL;
+    private TextView textViewV;
 
     private Button downloadBtn;
     private ProgressBar progressBar;
@@ -40,19 +41,26 @@ public class DetailVideo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_video);
 
-        String postId = getIntent().getStringExtra("postID");
-        getInitPost(postId);
+        //String postId = getIntent().getStringExtra("postID");
+        //getInitPost(postId);
+        getInitPost("64cb6e7913c4bbb743894835");
     }
     private void initWidget(){
         videoViewPost = (VideoView) findViewById(R.id.videoView);
         textView = (TextView) findViewById(R.id.titlePost);
         textViewDesc = (TextView) findViewById(R.id.textDescription);
         textViewDateL = (TextView) findViewById(R.id.textDate);
+        textViewV = (TextView) findViewById(R.id.vuVideo);
 
         try {
             textView.setText(obj.getString("title"));
             textViewDesc.setText(obj.getString("Lieu"));
             textViewDateL.setText(obj.getString("datePost"));
+            if (obj.getString("visite") == null){
+                textViewV.setText("0 VIEW");
+            }else{
+                textViewV.setText(obj.getString("visite") + " VIEW");
+            }
             try {
                 // Create a MediaController to enable video controls (play, pause, seek)
                 MediaController mediaController = new MediaController(this);

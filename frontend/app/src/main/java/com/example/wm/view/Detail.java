@@ -38,6 +38,7 @@ public class Detail extends AppCompatActivity {
     private TextView textView;
     private TextView textViewDesc;
     private TextView textViewDateL;
+    private TextView textViewV;
     private Button downloadButton;
 
     private Button favoriteButton;
@@ -46,8 +47,9 @@ public class Detail extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detail);
-        String postTitle = getIntent().getStringExtra("postID");
-        getInitPost(postTitle);
+        //String postTitle = getIntent().getStringExtra("postID");
+        //getInitPost(postTitle);
+        getInitPost("64c88bcb700c072f9bcc7327");
     }
 
 
@@ -56,14 +58,22 @@ public class Detail extends AppCompatActivity {
         textView = (TextView) findViewById(R.id.titlePost);
         textViewDesc = (TextView) findViewById(R.id.textDescription);
         textViewDateL = (TextView) findViewById(R.id.textDate);
+        textViewV = (TextView) findViewById(R.id.vueDetail);
 
         try {
             textView.setText(obj.getString("title"));
             textViewDesc.setText(obj.getString("Lieu"));
             textViewDateL.setText(obj.getString("datePost"));
+
+            if (obj.getString("visite") == null){
+                textViewV.setText("0 VIEW");
+            }else{
+                textViewV.setText(obj.getString("visite") + " VIEW");
+            }
+
             Glide.with(this)
                     .load(obj.getString("image_url"))
-                    .placeholder(R.drawable.red_placeholder_image) // Placeholder image while loading (if needed)
+                    .placeholder(R.drawable.iconimage) // Placeholder image while loading (if needed)
                     .error(R.drawable.error) // Image to display in case of error (if needed)
                     .into(imageViewPost);
 
