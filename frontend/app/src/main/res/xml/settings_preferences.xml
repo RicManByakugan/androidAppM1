@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <CheckBoxPreference
-        android:key="enable_notifications"
-        android:title="Enable Notifications"
-        android:summary="Receive notifications for updates."
-        android:defaultValue="true" />
-
     <ListPreference
         android:key="theme"
         android:title="App Theme"
@@ -14,6 +8,21 @@
         android:defaultValue="light"
         android:entries="@array/theme_options"
         android:entryValues="@array/theme_values" />
+    <ListPreference
+        android:key="font_preference"
+        android:title="Font Style"
+        android:summary="Choose the app's font style."
+        android:defaultValue="regular"
+        android:entries="@array/font_options"
+        android:entryValues="@array/font_values" />
+
+    <SeekBarPreference
+        android:key="font_size_preference"
+        android:title="Font Size"
+        android:summary="Adjust the app's font size."
+        android:defaultValue="16"
+        android:min="12"
+        android:max="24" />
     <Preference
         android:key="disconnect_button"
         android:title="Disconnect"

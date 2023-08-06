@@ -18,4 +18,17 @@
         <item>Yes</item>
         <item>No</item>
     </string-array>
+    <string-array name="font_options">
+        <item>Regular</item>
+        <item>Bold</item>
+        <item>Italic</item>
+        <!-- Add more font options as needed -->
+    </string-array>
+
+    <string-array name="font_values">
+        <item>regular.ttf</item>
+        <item>bold.ttf</item>
+        <item>italic.ttf</item>
+        <!-- Corresponding font file names for each option -->
+    </string-array>
 </resources>

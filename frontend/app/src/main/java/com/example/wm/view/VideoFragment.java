@@ -21,7 +21,6 @@ import java.util.List;
 
 public class VideoFragment extends Fragment {
 
-    // ...
 
     private List<String> messagesList = new ArrayList<>();
     private MessageAdapter adapter;
