@@ -110,7 +110,7 @@ async function NotificationUserIDWatch(clientConnex, req, res) {
 }
 
 async function NotificationUser(clientConnex, req, res) {
-    await clientConnex.db("WM").collection('Notification').find({dateNotif: -1}).toArray()
+    await clientConnex.db("WM").collection('Notification').find().toArray()
         .then(resNotif => {
             if (resNotif) {
                 res.send(resNotif)
