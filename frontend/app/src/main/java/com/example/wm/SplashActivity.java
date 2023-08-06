@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.wm.view.Detail;
 import com.example.wm.view.DetailVideo;
+import com.example.wm.view.Home;
 import com.example.wm.view.Login;
 
 public class SplashActivity extends AppCompatActivity {
@@ -22,7 +23,7 @@ public class SplashActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(SplashActivity.this, Login.class);
+                Intent intent = new Intent(SplashActivity.this, Home.class);
                 startActivity(intent);
                 finish();
             }

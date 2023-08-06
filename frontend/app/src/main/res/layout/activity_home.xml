@@ -29,7 +29,11 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Image" />
+            android:background="#0D4A06"
+            android:backgroundTint="#0D4A06"
+            android:text="Image"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="#9FA8DA" />
 
         <Button
             android:id="@+id/btnVideo"
@@ -37,7 +41,11 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Video" />
+            android:background="#0D4A06"
+            android:backgroundTint="#0D4A06"
+            android:text="Video"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="#9FA8DA" />
 
         <Button
             android:id="@+id/btnNotification"
@@ -45,7 +53,13 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Notification" />
+            android:background="#0D4A06"
+            android:backgroundTint="#0D4A06"
+            android:text="Notification"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="#9FA8DA" />
+
+
 
     </LinearLayout>
 

@@ -42,7 +42,7 @@ public class PostAdapter extends ArrayAdapter<Post> {
 
         textViewTitle.setText(currentPost.getTitle());
         textViewDate.setText(currentPost.getDatePost());
-        textViewLieu.setText(currentPost.getLieu());
+        //textViewLieu.setText(currentPost.getLieu());
 
         // Load the image using Picasso or other image-loading libraries
         Glide.with(this.getContext())
