@@ -40,8 +40,8 @@ public class DetailVideo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_video);
 
-        String postId = getIntent().getStringExtra("postID");
-        getInitPost(postId);
+        //String postId = getIntent().getStringExtra("postID");
+        getInitPost("64cb6e7913c4bbb743894836");
     }
     private void initWidget(){
         videoViewPost = (VideoView) findViewById(R.id.videoView);
@@ -51,8 +51,8 @@ public class DetailVideo extends AppCompatActivity {
 
         try {
             textView.setText(obj.getString("title"));
-            textViewDesc.setText(obj.getString("Lieu") + " | " + obj.getString("datePost"));
-            //textViewDateL.setText(obj.getString("datePost"));
+            textViewDesc.setText(obj.getString("Lieu"));
+            textViewDateL.setText(obj.getString("datePost"));
             try {
                 // Create a MediaController to enable video controls (play, pause, seek)
                 MediaController mediaController = new MediaController(this);
