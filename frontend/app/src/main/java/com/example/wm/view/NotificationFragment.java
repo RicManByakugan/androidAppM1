@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.example.wm.R;
 import com.example.wm.controller.user.ControllerUser;
@@ -39,6 +40,8 @@ public class NotificationFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_notification, container, false);
 
         recyclerViewNotifications = view.findViewById(R.id.recyclerViewNotifications);
+        ProgressBar progressBar = view.findViewById(R.id.progressBarNotification);
+        progressBar.setVisibility(View.VISIBLE);
 
         // Set up the layout manager and adapter for the RecyclerView
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -84,11 +87,18 @@ public class NotificationFragment extends Fragment {
                         }
                     }
                 });
+                ProgressBar progressBar = getView().findViewById(R.id.progressBarNotification);
+                if (progressBar != null) {
+                    progressBar.setVisibility(View.GONE);
+                }
             }
 
             @Override
             public void onError(String dataEmpty) {
-
+                ProgressBar progressBar = getView().findViewById(R.id.progressBarNotification);
+                if (progressBar != null) {
+                    progressBar.setVisibility(View.GONE);
+                }
             }
         });
 

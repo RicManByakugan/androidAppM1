@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.example.wm.R;
 import com.example.wm.controller.post.ControllerPost;
@@ -78,6 +79,10 @@ public class ListVideoFragement extends Fragment {
                 //ArrayAdapter<Post> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.list_item_postVideo, postList);
                 postAdapter = new PostAdapterVideo(getActivity(), postList);
                 listViewPostVideo.setAdapter(postAdapter);
+                ProgressBar progressBar = getView().findViewById(R.id.progressBarVideo);
+                if (progressBar != null) {
+                    progressBar.setVisibility(View.GONE);
+                }
             }
 
             @Override
@@ -88,6 +93,10 @@ public class ListVideoFragement extends Fragment {
                 // Pass an empty list to the adapter to trigger the error view
                 postAdapter = new PostAdapterVideo(getActivity(), new ArrayList<>());
                 listViewPostVideo.setAdapter(postAdapter);
+                ProgressBar progressBar = getView().findViewById(R.id.progressBarVideo);
+                if (progressBar != null) {
+                    progressBar.setVisibility(View.GONE);
+                }
             }
         });
     }
@@ -97,6 +106,8 @@ public class ListVideoFragement extends Fragment {
         View view = inflater.inflate(R.layout.fragment_list_video_fragement, container, false);
 
         listViewPostVideo = view.findViewById(R.id.listViewPostVideo);
+        ProgressBar progressBar = view.findViewById(R.id.progressBarVideo);
+        progressBar.setVisibility(View.VISIBLE);
 
         postAdapter = new PostAdapterVideo(getActivity(), new ArrayList<>());
         listViewPostVideo.setAdapter(postAdapter);
