@@ -23,42 +23,31 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <Button
+        <ImageButton
             android:id="@+id/btnImage"
-            style="@style/BorderlessButton"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="50dp"
             android:layout_weight="1"
             android:background="#0D4A06"
-            android:backgroundTint="#0D4A06"
-            android:text="Image"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textColor="#9FA8DA" />
+            android:src="@android:drawable/ic_menu_camera" />
 
-        <Button
+        <ImageButton
             android:id="@+id/btnVideo"
-            style="@style/BorderlessButton"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="50dp"
             android:layout_weight="1"
             android:background="#0D4A06"
             android:backgroundTint="#0D4A06"
-            android:text="Video"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textColor="#9FA8DA" />
+            android:src="@android:drawable/ic_media_play" />
 
-        <Button
+        <ImageButton
             android:id="@+id/btnNotification"
-            style="@style/BorderlessButton"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="50dp"
             android:layout_weight="1"
             android:background="#0D4A06"
             android:backgroundTint="#0D4A06"
-            android:text="Notification"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textColor="#9FA8DA" />
-
+            android:src="@android:drawable/ic_menu_recent_history" />
 
 
     </LinearLayout>

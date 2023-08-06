@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AlertDialog;
@@ -60,7 +61,7 @@ public class Home extends AppCompatActivity {
         }
     }
     public void init(){
-        Button btnList=findViewById(R.id.btnImage);
+        ImageButton btnList=findViewById(R.id.btnImage);
         btnList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -69,7 +70,7 @@ public class Home extends AppCompatActivity {
             }
         });
 
-        Button btnPreference=findViewById(R.id.btnVideo);
+        ImageButton btnPreference=findViewById(R.id.btnVideo);
         btnPreference.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -78,7 +79,7 @@ public class Home extends AppCompatActivity {
             }
         });
 
-        Button btnNotification=findViewById(R.id.btnNotification);
+        ImageButton btnNotification=findViewById(R.id.btnNotification);
         btnNotification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
