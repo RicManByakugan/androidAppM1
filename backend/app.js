@@ -114,6 +114,11 @@ async function start(port, routeUser, routePost) {
     app.post("/post/", routePost.addpost)
     // --------------------------------------------------------------------------------
 
+    app.get("/", (req, res) => {
+        res.send({
+            WM: "API FOR WELCOME MADAGASCAR APPLICATION MOBILE"
+        })
+    })
 
     // 404 ERROR
     app.use((req, res) => {
